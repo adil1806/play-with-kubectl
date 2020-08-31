@@ -1,0 +1,177 @@
+
+
+
+Deployments::::
+
+Defination:
+Its all about updates and rollback
+---------------------------------------------
+Features:
+-> multiple replicas.
+-> upgrade
+-> rollback
+-> scale up/down
+-> pause and resume
+
+------------------------------------------------
+Deployments Types:::
+-> recreate: first this down the sinstance then upgrade and then up means downtime
+-> rollingupdate: 10 instances it will update 1 by 1 means incremental
+-> canary: suppose 10 instances, on 2 instances it will upgrade from version A to version B and then test then it upgrade on remaining 8 instances.. then shutdown the version A instances
+-> blue/green: 
+
+----------------------------------------------------
+manifacts file::::
+
+
+file-name: nginx-deploy.yml
+
+--------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    app: nginx-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+       app: nginx-app
+  template:
+    metadata:
+      labels:
+       app: nginx-app
+    spec:
+     containers:
+       - name: nginx-containers
+         image: nginx:latest
+         ports:
+           - containerPort: 80
+
+---------------------------------------------------------------------
+
+Create a deploy
+kubectl create -f nginx-deploy.yml
+
+root@master:~# kubectl get deploy -o wide
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE    CONTAINERS         IMAGES         SELECTOR
+nginx-deploy   3/3     3            3           102s   nginx-containers   nginx:latest   app=nginx-app
+
+
+root@master:~# kubectl get po -o wide
+NAME                            READY   STATUS    RESTARTS   AGE   IP            NODE               NOMINATED NODE   READINESS GATES
+nginx-deploy-85d8dfdbd9-2z8w9   1/1     Running   0          91s   10.244.1.28   ip-172-31-25-242   <none>           <none>
+nginx-deploy-85d8dfdbd9-qr88w   1/1     Running   0          91s   10.244.1.30   ip-172-31-25-242   <none>           <none>
+nginx-deploy-85d8dfdbd9-rcp8j   1/1     Running   0          91s   10.244.1.29   ip-172-31-25-242   <none>           <none>
+
+root@master:~# kubectl get rs -o wide
+NAME                      DESIRED   CURRENT   READY   AGE     CONTAINERS         IMAGES         SELECTOR
+nginx-deploy-85d8dfdbd9   3         3         3       2m11s   nginx-containers   nginx:latest   app=nginx-app,pod-template-hash=85d8dfdbd9
+
+
+root@master:~# kubectl describe deploy nginx-deploy
+//Name:                   nginx-deploy//
+Namespace:              default
+CreationTimestamp:      Mon, 31 Aug 2020 12:48:46 +0000
+//Labels:                 app=nginx-app//
+Annotations:            deployment.kubernetes.io/revision: 1
+//Selector:               app=nginx-app//
+//Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavailable//
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=nginx-app
+  Containers:
+   nginx-containers:
+    Image:        nginx:latest
+    Port:         80/TCP
+    Host Port:    0/TCP
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   nginx-deploy-85d8dfdbd9 (3/3 replicas created)
+Events:
+  Type    Reason             Age    From                   Message
+  ----    ------             ----   ----                   -------
+  Normal  ScalingReplicaSet  4m18s  deployment-controller  Scaled up replica set nginx-deploy-85d8dfdbd9 to 3
+
+---------------------------------------------------------------------------------------------------------
+Update:::
+Currently having nginx:latest
+lets change it to nginx:1.7.9
+
+root@master:~# kubectl set image deploy nginx-deploy nginx-containers=nginx:1.7.9
+deployment.apps/nginx-deploy image updated
+
+root@master:~# kubectl get deploy -o wide
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS         IMAGES        SELECTOR
+nginx-deploy   3/3     3            3           7m59s   nginx-containers   nginx:1.7.9   app=nginx-app
+
+edit deployment:
+root@master:~# kubectl edit deploy nginx-deploy
+
+-----------------------------------------------------------------------------------------------------
+Rollback:::
+nginx:1.7.9 --> nginx:1.89 which is wrong version
+Currently having
+root@master:~# kubectl get deploy -o wide
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS         IMAGES        SELECTOR
+nginx-deploy   3/3     2            3           16m   nginx-containers   nginx:1.7.9   app=nginx-app
+
+update to wrong verison:
+root@master:~# kubectl set image deploy nginx-deploy nginx-containers=nginx:1.89 --record
+deployment.apps/nginx-deploy image updated
+
+see update history
+root@master:~# kubectl rollout history deployment/nginx-deploy
+deployment.apps/nginx-deploy
+REVISION  CHANGE-CAUSE
+7         kubectl set image deploy nginx-deploy nginx-containers=nginx:latest --record=true
+8         kubectl set image deploy nginx-deploy nginx-containers=nginx:1.7.9 --record=true
+9         kubectl set image deploy nginx-deploy nginx-containers=nginx:1.89 --record=true
+
+now rollback to previous version:
+root@master:~# kubectl rollout undo deployment/nginx-deploy
+deployment.apps/nginx-deploy rolled back
+
+current verison:
+root@master:~# kubectl get deploy -o wide
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS         IMAGES        SELECTOR
+nginx-deploy   3/3     3            3           17m   nginx-containers   nginx:1.7.9   app=nginx-app
+
+rollback status:
+root@master:~# kubectl rollout status deployment/nginx-deploy
+deployment "nginx-deploy" successfully rolled out
+
+
+--------------------------------------------------------------------------------------------
+scale up::
+root@master:~# kubectl scale deploy nginx-deploy --replicas=6
+deployment.apps/nginx-deploy scaled
+
+root@master:~# kubectl get deploy -o wide
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS         IMAGES         SELECTOR
+nginx-deploy   6/6     6            6           22m   nginx-containers   nginx:latest   app=nginx-app
+
+--------------------------------------------------------------------------------------------
+scale-down:::
+root@master:~# kubectl  scale deploy nginx-deploy --replicas=3
+deployment.apps/nginx-deploy scaled
+
+root@master:~# kubectl get deploy -o wide
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS         IMAGES         SELECTOR
+nginx-deploy   3/3     3            3           23m   nginx-containers   nginx:latest   app=nginx-app
+
+-----------------------------------------------------------------------------------------------
+
+Delete the deployments:
+root@master:~# kubectl  delete -f nginx-deploy.yml
+deployment.apps "nginx-deploy" deleted
