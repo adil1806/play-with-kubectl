@@ -1,0 +1,104 @@
+
+
+::::Replica Set (RS)::::
+
+Defination:::
+It ensures that specific no. of pods running at any time.
+    -> If there are excess pods ruuning then RS kill It.
+    -> New pods are launched when they get kill/failed/terminated.
+RS and pods are associated with "LABELS"
+
+ReplicaSet vs. Replica Controller:::
+-> ReplicaSet is Next generation  Replica Controller
+-> ReplicaSet --> set based selectors
+-> Replica Controller --> Equality based selectors
+
+
+Labels & selectors:::
+-> Labels are attched to pods
+-> Controller and services manage the pod using selectors(labels)
+-> selectors can be set bases or Equality based
+-----------------------------------------------------------------------------------
+Equality-based                      set-based
+------------------------------------------------------------------------------------
+-- operators
+    = == !=                         in notin exists
+-- exmple
+   env=uat                           env in (prod, uat,dev)
+   tier !=prod                      tier notin (dev,uat)
+-- manifest
+    ...                             ...
+    selector:                       selector:
+      env: uat                          - {key:env,operator:in,values:[prod,ua,dev]}
+      tier: pros                        - {key:tier,operator:notin,values:[uat,dev]}
+    ...                             ...
+-------------------------------------------------------------------------------------
+
+
+Replica-set.yml
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+   name: nginx-rs 
+spec:
+  replicas: 3
+  selector:
+     matchLabels:
+        app: nginx-app
+        tier: uat
+
+  template:
+     metadata:
+       name: nginx-app
+       labels:
+         app: nginx-app
+         tier: uat
+     spec:
+       containers:
+         - name: nginx-container
+           image: nginx:latest
+           ports:
+             - containerPort: 80
+
+Now. create RS
+kubectl create -f Replica-set.yml
+
+root@master:~# kubectl get rs -o wide
+NAME       DESIRED   CURRENT   READY   AGE   CONTAINERS        IMAGES         SELECTOR
+nginx-rs   3         3         3       52s   nginx-container   nginx:latest   app=nginx-app
+
+root@master:~# kubectl get po -o wide
+NAME             READY   STATUS    RESTARTS   AGE   IP            NODE               NOMINATED NODE   READINESS GATES
+nginx-rs-b4cw4   1/1     Running   0          58s   10.244.1.24   ip-172-31-25-242   <none>           <none>
+nginx-rs-jbp7s   1/1     Running   0          58s   10.244.1.25   ip-172-31-25-242   <none>           <none>
+nginx-rs-vnmjg   1/1     Running   0          58s   10.244.1.23   ip-172-31-25-242   <none>           <none>
+
+Filter using labels:
+root@master:~# kubectl get po -l app=nginx-app
+NAME             READY   STATUS    RESTARTS   AGE
+nginx-rs-b4cw4   1/1     Running   0          5m23s
+nginx-rs-jbp7s   1/1     Running   0          5m23s
+nginx-rs-vnmjg   1/1     Running   0          5m23s
+
+RS Scaling:::
+root@master:~# kubectl scale rs nginx-rs --replicas=5
+replicaset.apps/nginx-rs scaled
+root@master:~# kubectl get po -o wide
+NAME             READY   STATUS              RESTARTS   AGE   IP            NODE               NOMINATED NODE   READINESS GATES
+nginx-rs-4hx9n   1/1     Running             0          4s    10.244.1.26   ip-172-31-25-242   <none>           <none>
+nginx-rs-b4cw4   1/1     Running             0          61m   10.244.1.24   ip-172-31-25-242   <none>           <none>
+nginx-rs-jbp7s   1/1     Running             0          61m   10.244.1.25   ip-172-31-25-242   <none>           <none>
+nginx-rs-jf85f   0/1     ContainerCreating   0          4s    <none>        ip-172-31-25-242   <none>           <none>
+nginx-rs-vnmjg   1/1     Running             0          61m   10.244.1.23   ip-172-31-25-242   <none>           <none>
+
+RS scale down
+root@master:~# kubectl scale rs nginx-rs --replicas=2
+replicaset.apps/nginx-rs scaled
+root@master:~# kubectl get po -o wide
+NAME             READY   STATUS        RESTARTS   AGE   IP            NODE               NOMINATED NODE   READINESS GATES
+nginx-rs-4hx9n   1/1     Terminating   0          58s   10.244.1.26   ip-172-31-25-242   <none>           <none>
+nginx-rs-b4cw4   1/1     Running       0          61m   10.244.1.24   ip-172-31-25-242   <none>           <none>
+nginx-rs-jbp7s   1/1     Running       0          61m   10.244.1.25   ip-172-31-25-242   <none>           <none>
+nginx-rs-jf85f   1/1     Terminating   0          58s   10.244.1.27   ip-172-31-25-242   <none>           <none>
+nginx-rs-vnmjg   0/1     Terminating   0          61m   10.244.1.23   ip-172-31-25-242   <none>           <none>
