@@ -1,0 +1,40 @@
+
+
+
+::: Services:::
+::: LoadBalancer:::
+
+
+manifest file:
+name:nginx-lb-service.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    app: nginx-app
+spec:
+  selector:
+   app: nginx-app
+  type: LoadBalancer
+  externalIPs:
+   - 3.135.234.64
+  ports:
+   - nodePort: 31000
+     port: 80
+     targetPort: 80
+
+
+root@master:~# kubectl create -f nginx-lb-service.yml
+service/nginx-service created
+
+root@master:~# kubectl create -f nginx-lb-service.yml
+service/nginx-service created
+root@master:~# kubectl get services -o wide
+NAME            TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+kubernetes      ClusterIP      10.96.0.1       <none>        443/TCP        47h   <none>
+nginx-service   LoadBalancer   10.102.71.160   3.20.66.155   80:31000/TCP   3s    app=nginx-app
+
+
+we can access using ext IP

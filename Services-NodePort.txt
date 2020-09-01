@@ -1,0 +1,126 @@
+
+
+::::Services::::
+
+controller creates a pod with unique IP addr.
+To expose the pod ip to outside world then services comes in picture.
+
+Example: in one pod having frontend and backend pod. Both having unique IP. 
+So, we need to create one service for frontend and backend pod communication.
+and one service for frontend pod to outside world.
+
+services:
+-> cluster IP ex: connecting frontend and backend pods
+-> NodePort ex: expose frontend pod to outside world
+-> LoadBalancer 
+
+:::NodePort:::
+We need NodePort because:
+-> user does not having connection to pod ip.
+-> pod are ephemeral they can die at any time and controller create a another one which having diff. IP.
+-> NodePort range 30000-32767
+-> inside this its having NodePort, port, target port
+    Nodeport means outsider may access using this port
+    port means port which defines inside service manifest file
+    target port means pod which want to access.
+Delimitation:
+-> we can have one service per port
+-> port range
+-> if node ip changes we need to deal with it.
+--------------------------------------------------------------------
+manifest file:
+name: nginx-service.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+   name: my-service
+   labels:
+     app=nginx-app
+spec:
+  selector:
+     app: nginx-app
+  type: NodePort
+  ports:
+   - nodePort: 31000
+     port: 80
+     targetPort: 80
+-----------------------------------------------------------------------------------
+now, create a deploy
+then create a service
+root@master:~# kubectl  create -f nginx-service.yml
+service/nginx-service created
+root@master:~# kubectl get service -o wide
+NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+kubernetes      ClusterIP   10.96.0.1        <none>        443/TCP        44h   <none>
+nginx-service   NodePort    10.104.202.128   <none>        80:31000/TCP   9s    app=nginx-app
+
+
+we have pods
+root@master:~# kubectl get po -o wide
+NAME                            READY   STATUS    RESTARTS   AGE     IP            NODE               NOMINATED NODE   READINESS GATES
+nginx-deploy-85d8dfdbd9-9bznm   1/1     Running   0          7m57s   10.244.1.55   ip-172-31-25-242   <none>           <none>
+nginx-deploy-85d8dfdbd9-c2dd5   1/1     Running   0          7m57s   10.244.1.53   ip-172-31-25-242   <none>           <none>
+nginx-deploy-85d8dfdbd9-hpbzd   1/1     Running   0          7m57s   10.244.1.54   ip-172-31-25-242   <none>           <none>
+
+---------------------------------------------------------------------------
+Accessing::::
+
+using a pod ip 
+we can access inside cluster but not from outside..
+
+root@master:~# curl 10.244.1.55:80
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+
+using service ip
+this also can access inside cluster
+
+using node ip
+kubectl get no -o wide 
+will give you a pprivate ip take a public ip and test
+
+---------------------------------------------------------------------------------
+service describe::
+root@master:~# kubectl describe service nginx-service
+Name:                     nginx-service
+Namespace:                default
+Labels:                   app=nginx-app
+Annotations:              <none>
+Selector:                 app=nginx-app
+Type:                     NodePort
+IP:                       10.104.202.128
+Port:                     <unset>  80/TCP
+TargetPort:               80/TCP
+NodePort:                 <unset>  31000/TCP
+Endpoints:                10.244.1.53:80,10.244.1.54:80,10.244.1.55:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+
+
+
