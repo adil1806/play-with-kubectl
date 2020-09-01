@@ -16,7 +16,7 @@ Features:
 ------------------------------------------------
 Deployments Types:::
 -> recreate: first this down the sinstance then upgrade and then up means downtime
--> rollingupdate: 10 instances it will update 1 by 1 means incremental
+-> rollingupdate: 10 instances it will update 1 by 1 means incremental (this is default deployment type of kubernetes)
 -> canary: suppose 10 instances, on 2 instances it will upgrade from version A to version B and then test then it upgrade on remaining 8 instances.. then shutdown the version A instances
 -> blue/green: 
 
