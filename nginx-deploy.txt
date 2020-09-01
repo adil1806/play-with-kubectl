@@ -2,6 +2,7 @@
 
 
 Deployments::::
+This will create 1 RS and no. of repliaces pod:
 
 Defination:
 Its all about updates and rollback
