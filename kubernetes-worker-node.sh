@@ -1,3 +1,11 @@
+#######################################################################
+#### Installation of kubeadm and docker for kubernetes worker node ####
+################# system compatible Ubuntu:18.04.5 LTS (Bionic Beaver) #######################
+####################   Maintainer: Adil Khan  #########################
+############### To Run this script ####################################
+### curl -s https://raw.githubusercontent.com/adil1806/play-with-kubectl/master/kubernetes-worker-node.sh | bash ####
+###########################################################################################################################
+
 #!/bin/bash
 apt-get update
 apt-get install -y apt-transport-https

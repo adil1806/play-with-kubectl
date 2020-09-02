@@ -1,0 +1,146 @@
+
+
+
+::: Storage Volumes:::
+
+Volumes bring persistence to pods.
+Adv. of Volumes:
+    -> containers has access to it.
+    -> Volumes are associated eith pods not containers.
+    -> Supports many types of Volumes.
+
+Volumes types:
+1. Ephemeral --> same lifeitme as pods.
+2. Durable  --> Beyonds pods lifetime
+
+types:
+-> configmap
+-> emptyDir
+-> persistenceVolumeCliam
+-> secret
+-> Hostpath
+
+
+emptyDir:
+--> empty dir first created when a pods assinged to node.
+--> stay as long as pod is running.
+--> once pods is removed from node, emptyDir is deleted forever.
+--> primary usage--> temporary usage.
+
+creating pod with emptyDir vol.
+manifest file:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-vol
+spec:
+  containers:
+   - image: nginx
+    name: test-container
+    volumeMounts:
+     - name: test-vol
+       mountPath: /cache
+  volumes:
+   - name: test-vol
+     emptyDir: {}
+
+root@master:~# kubectl  create -f pod-vol.yml
+pod/test-vol created
+
+root@master:~# kubectl get po -o wide
+NAME       READY   STATUS    RESTARTS   AGE   IP            NODE               NOMINATED NODE   READINESS GATES
+test-vol   1/1     Running   0          16s   10.244.2.15   ip-172-31-32-193   <none>           <none>
+
+Vol created inside container...
+root@master:~# kubectl  exec test-vol df /cache
+kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead.
+Filesystem     1K-blocks    Used Available Use% Mounted on
+/dev/xvda1      20263484 3924012  16323088  20% /cache
+
+
+
+Hostpath:
+--> mount a file/dir from host node's filesysten into your pods.
+--> Remains after po is terminated.
+--> similar to docker Volume.
+
+
+manifest file: pod with Hostpath vol
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-vol
+spec:
+  containers:
+   - image: nginx
+    name: test-container
+    volumeMounts:
+    - mountPath: /home/ubuntu/
+      name: test-vol
+  volumes:
+   - name: test-vol
+     hostPath:
+       path: /home/ubuntu/
+
+
+root@master:~# kubectl create -f pod-hothvol.yml
+pod/test-vol created
+
+root@master:~# kubectl  exec test-vol df /home/ubuntu/
+kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead.
+Filesystem     1K-blocks    Used Available Use% Mounted on
+/dev/xvda1      20263484 3923860  16323240  20% /home/ubuntu
+
+SSH to pod node
+check container running 
+ubuntu@ip-172-31-32-193:~$ docker ps
+CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS               NAMES
+8e1362e1d10c        nginx                   "/docker-entrypoint.…"   2 minutes ago       Up 2 minutes                            k8s_test-container_test-vol_default_557e49c3-254e-409f-bb11-5feea8d41843_0
+
+enter into container:
+ubuntu@ip-172-31-32-193:~$ docker exec -it 8e1362e1d10c bash
+
+cd to hostpath:
+root@test-vol:/# cd /home/ubuntu/
+
+checking file
+root@test-vol:/home/ubuntu# ls
+BuildAgent  minikube
+
+creating one file pod.txt
+root@test-vol:/home/ubuntu# echo "from pod cont" >pod.txt
+root@test-vol:/home/ubuntu# cat pod.txt
+from pod cont
+
+exit from container:
+root@test-vol:/home/ubuntu# exit
+exit
+node server: file reflecting here or not which we created inside container:
+ubuntu@ip-172-31-32-193:~$ cat pod.txt
+from pod cont
+aah.. we can see file which we created inside container.
+
+Or we can check from master server using:
+
+This command will let you go inside pod container:
+root@master:~# kubectl exec test-vol -it -- /bin/bash
+root@test-vol:/# cat /home/ubuntu/pod.txt
+from pod cont
+
+Now, delete the pod:
+root@master:~# kubectl delete -f pod-hothvol.yml
+pod "test-vol" deleted
+
+let check will file persist or not..!!
+root@master:~# ssh ubuntu@18.221.74.164
+ubuntu@18.221.74.164's password:
+
+ubuntu@ip-172-31-32-193:~$ ls
+BuildAgent  minikube  pod.txt
+
+ubuntu@ip-172-31-32-193:~$ cat pod.txt
+from pod cont
+
+Answer is yes.. file persist after pod terminated...!!!!!!!!!!!!!!!
