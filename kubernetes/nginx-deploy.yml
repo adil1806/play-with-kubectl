@@ -30,3 +30,5 @@ spec:
              value: lko
          ports:
           - containerPort: 80
+     nodeSelector:
+         disktype: ssd
