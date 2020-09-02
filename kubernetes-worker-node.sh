@@ -1,3 +1,7 @@
+#######################################################################
+#### Installation of kubeadm and docker for kubernetes worker node ####
+####################    Maintainer: Adil Khan  ########################
+
 #!/bin/bash
 apt-get update
 apt-get install -y apt-transport-https
