@@ -1,0 +1,10 @@
+{
+  "kind": "Node",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "3.131.153.254",
+    "labels": {
+      "name": "worker02"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+    name: pod01
+    labels:
+        env: dev
+        name: adil
+spec:
+  replicas: 5
+  containers: 
+     - name: container01
+       image: nginx:latest
