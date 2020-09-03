@@ -6,7 +6,7 @@ kind: Pod
 metadata:
    name: project-1
    labels:
-     app: nginx
+     app: nginx-app
 spec:
   containers:
     - name: container01
@@ -14,19 +14,9 @@ spec:
       volumeMounts:
          - name: my-vol
            mountPath: /usr/share/nginx/html
-
-    - name: container02
-      image: alpine
-      volumeMounts:
-       - name: my-vol
-         mountPath: /my-vol
-      command: ["/bin/sh", "-c"]
-      args:
-        - while true; do
-           date >> /html/index.html;
-           sleep 1;
-          done
-       
+      ports:
+        -  containerPort: 80
   volumes:
-    -name: my-vol
-     emptyDir: {}
+   - name: my-vol
+     hostPath:
+             path: /usr/share/nginx/html
