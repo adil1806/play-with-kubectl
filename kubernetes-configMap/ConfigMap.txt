@@ -1,0 +1,87 @@
+
+
+
+::: configMap:::
+
+############### Configure configmap using volume ##############################################
+create a file:
+vim configdata.properties
+root@master:~/play-with-kubectl/kubernetes-configMap# cat configdata.properties
+color=blue
+size=1X
+passwd=123
+
+To create a confgi map from file:
+root@master:~/play-with-kubectl/kubernetes-configMap# kubectl create cm myconfig --from-file configdata.properties
+configmap/myconfig created
+
+root@master:~/play-with-kubectl/kubernetes-configMap# kubectl  get cm -o wide
+NAME       DATA   AGE
+myconfig   1      8s
+
+See details of config:
+root@master:~/play-with-kubectl/kubernetes-configMap# kubectl describe cm myconfig
+Name:         myconfig
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+configdata.properties:
+----
+color=blue
+size=1X
+passwd=123
+
+Events:  <none>
+
+Now, cerate a pod using volume as configmap
+manifest file:
+name: config-map.yml
+==================================================
+apiVersion: v1
+kind: Pod
+metadata:
+     name: nginx
+spec:
+  containers:
+     - name: nginx-container
+       image: nginx
+       volumeMounts:
+           - name: first-config
+             mountPath: /configmap
+  volumes:
+    - name: first-config
+      configMap:
+          name: myconfig
+          items:
+           - key: configdata.properties           --> name of file from which config map created
+             path: config.conf                    --> name of file in which you want to save
+====================================================
+
+Now , create pod using file manifest file:
+root@master:~/play-with-kubectl/kubernetes-configMap# kubectl create -f config-map.yml
+pod/nginx created
+
+
+checking pod:
+root@master:~/play-with-kubectl/kubernetes-configMap# kubectl  get po
+NAME        READY   STATUS    RESTARTS   AGE
+nginx       1/1     Running   0          5s
+
+Let go inside pod:
+root@master:~/play-with-kubectl/kubernetes-configMap# kubectl exec -it nginx -- bash
+root@nginx:/# ls
+bin  boot  configmap  dev  docker-entrypoint.d  docker-entrypoint.sh  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@nginx:/# cd configmap/
+root@nginx:/configmap# ls
+config.conf
+root@nginx:/configmap# cat config.conf
+color=blue
+size=1X
+passwd=123
+
+##############################################################################
+
+################ configure configmap using env variable ########################
