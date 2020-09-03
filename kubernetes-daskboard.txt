@@ -1,0 +1,46 @@
+################# Kubernetes Dashboard ############################3
+
+run this command:
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+
+edit this service:
+kubectl edit svc kubernetes-dashboard -n kubernetes-dashboard
+
+ 19 spec:
+ 20   clusterIP: 10.99.13.145
+ 21   externalTrafficPolicy: Cluster
+ 22   ports:
+ 23   - nodePort: 31000   <--
+ 24     port: 443
+ 25     protocol: TCP
+ 26     targetPort: 8443
+ 27   selector:
+ 28     k8s-app: kubernetes-dashboard
+ 29   sessionAffinity: None
+ 30   type: NodePort    <--
+ 
+ Save this svc using wq!
+ 
+ 
+ Check svc using: it chnage type from clusterIP to nodePort
+ 
+root@master:~/play-with-kubectl/kubernetes# kubectl  get svc -n kubernetes-dashboard    
+NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE
+dashboard-metrics-scraper   ClusterIP   10.104.225.103   <none>        8000/TCP        29h
+kubernetes-dashboard        NodePort    10.99.13.145     <none>        443:31000/TCP   29h
+
+Check port listening or not...
+root@master:~/play-with-kubectl/kubernetes# lsof -i tcp:31000
+COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+kube-prox 4786 root   14u  IPv4 636079      0t0  TCP *:31000 (LISTEN)
+
+Now, to go browser
+using master node ip
+https://<master_ip>:nodeport
+
+
+This will ask for token:
+Generate token using:
+kubectl -n kube-system describe $(kubectl -n kube-system get secret -n kube-system -o name | grep namespace) | grep token
+
+Now, you r done..!!!!!!
