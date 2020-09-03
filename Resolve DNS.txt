@@ -1,0 +1,66 @@
+
+::::Service DNS:::
+
+
+Assume a Service named foo in the Kubernetes namespace bar.
+A Pod running in namespace bar can look up this service by simply doing a DNS query for foo. 
+A Pod running in namespace quux can look up this service by doing a DNS query for foo.bar.
+
+Initial setup
+
+root@master:~/play-with-kubectl/kubernetes# kubectl get pod -o wide --show-labels -n test-ns
+NAME                            READY   STATUS    RESTARTS   AGE     IP            NODE       NOMINATED NODE   READINESS GATES   LABELS
+nginx-deploy-66b94fd9d6-ml247   1/1     Running   0          7m25s   10.244.1.17   worker01   <none>           <none>            app=nginx-app,pod-template-hash=66b94fd9d6
+
+root@master:~/play-with-kubectl/kubernetes# kubectl get pod -o wide --show-labels -n default
+NAME                            READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES   LABELS
+nginx-deploy-66b94fd9d6-4bws8   1/1     Running   0          17m   10.244.4.13   worker02   <none>           <none>            app=nginx-app,pod-template-hash=66b94fd9d6root@master:~/play-with-kubectl/kubernetes# kubectl get svc -o wide --show-labels
+
+root@master:~/play-with-kubectl/kubernetes# kubectl get svc -o wide --show-labels -n default
+NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE     SELECTOR        LABELS
+kubernetes      ClusterIP   10.96.0.1        <none>        443/TCP        3d20h   <none>          component=apiserver,provider=kubernetes
+nginx-service   NodePort    10.107.114.209   <none>        80:32000/TCP   40h     app=nginx-app   app=nginx-app
+
+root@master:~/play-with-kubectl/kubernetes# kubectl get svc -o wide --show-labels -n test-ns
+No resources found in test-ns namespace.
+
+In ns default one pod running and in ns test-ns one pod running.
+one service which is in default ns
+
+Now, 
+go to service ns pod container:
+
+root@master:~/play-with-kubectl/kubernetes# kubectl exec -it nginx-deploy-66b94fd9d6-4bws8 -- bash
+root@nginx-deploy-66b94fd9d6-4bws8:/# curl -I nginx-service
+HTTP/1.1 200 OK
+Server: nginx/1.19.2
+Date: Thu, 03 Sep 2020 04:13:39 GMT
+Content-Type: text/html
+Content-Length: 1346
+Last-Modified: Tue, 01 Sep 2020 10:15:57 GMT
+Connection: keep-alive
+ETag: "5f4e1f5d-542"
+Accept-Ranges: bytes
+
+service name resolve in this own ns....
+
+Let go to container which is in different ns.... and service is in different ns::
+
+root@master:~/play-with-kubectl/kubernetes# kubectl exec -it nginx-deploy-66b94fd9d6-ml247 -n test-ns -- bash
+root@nginx-deploy-66b94fd9d6-ml247:/# curl -I nginx-service
+curl: (6) Could not resolve host: nginx-service
+
+We cannot access service using DNS name which belong to different namespace..
+For that::
+
+Using <service-name>.<service-namespace>
+root@nginx-deploy-66b94fd9d6-ml247:/# curl -I nginx-service.default
+HTTP/1.1 200 OK
+Server: nginx/1.19.2
+Date: Thu, 03 Sep 2020 04:16:55 GMT
+Content-Type: text/html
+Content-Length: 1346
+Last-Modified: Tue, 01 Sep 2020 10:15:57 GMT
+Connection: keep-alive
+ETag: "5f4e1f5d-542"
+Accept-Ranges: bytes
