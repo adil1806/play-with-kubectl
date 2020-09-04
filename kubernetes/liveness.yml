@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: liveness
+  labels:
+    app: liveness
+spec:
+  replicas: 1
+  selector:
+       matchLabels:
+           app: liveness-pod
+  template:
+    metadata:
+      labels:
+        app: liveness-pod
+    spec:
+      containers:
+      - image: busybox
+        name: busybox-container
+        args:
+         - /bin/sh
+         - -c
+         - touch hello.txt; sleep 30; rm -rf hello.txt; sleep 600
+        livenessProbe:
+              exec:
+               command:
+                   - cat
+                   - hello.txt
+              initialDelaySeconds: 5
+              periodSeconds: 3
