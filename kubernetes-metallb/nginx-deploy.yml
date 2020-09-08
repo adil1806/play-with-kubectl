@@ -1,4 +1,4 @@
-############### example of resource limit and request #################################################
+######################### exmaple of node selector ########################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,11 +24,6 @@ spec:
      containers:
        - name: nginx-containers
          image: mak1806/custom-nginx:v1.0
-         resources:
-             limits: 
-                 cpu: 100Mi
-             requests:
-                 cpu: 100Mi
          env:
            - name: myname
              value: adil

@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: nginx-ingress
+spec:
+   rules:
+    - host: mynginx.com
+      http:
+        paths:
+         - pathType: Prefix
+           path: "/adil"
+           backend:
+              service:
+               name: nginx-deploy-main
+               port:
+                 number: 80

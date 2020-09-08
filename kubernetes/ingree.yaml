@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+    name: nginx-ingress
+    annotations:
+        kubernetes.io/ingress.class: nginx
+spec:
+   rules:
+    - host: nginx.playwithdocker.ml
+      http:
+        paths:
+        -  backend:
+              serviceName: nginx-cluster-service
+              servicePort: 80

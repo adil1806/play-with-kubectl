@@ -35,6 +35,7 @@ spec:
           - --cert-dir=/tmp
           - --secure-port=4443
           - --kubelet-preferred-address-types=InternalIP
+          - /metrics-server
           - --kubelet-insecure-tls  
         ports:
         - name: main-port

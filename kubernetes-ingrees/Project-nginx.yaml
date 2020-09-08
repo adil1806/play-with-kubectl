@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nginx
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  namespace: nginx
+  labels:
+    app: nginx-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-app
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: nginx-app
+    spec:
+     containers:
+      - name: nginx-conatiner
+        image: nginx
+        ports:
+         - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: nginx
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: nginx-app
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginxingress
+  namespace: nginx
+  annotations:
+         nginx.ingress.kubernetes.io/reqrite-target: /
+spec:
+  rules:
+    - http:
+       paths:
+        - path: /adil 
+          backend:
+           serviceName: nginx-service
+           servicePort: 80

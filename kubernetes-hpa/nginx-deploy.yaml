@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-hpa
+spec:
+  selector:
+    matchLabels:
+      run: nginx-hpa
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: nginx-hpa
+    spec:
+      containers:
+      - name: php-apache
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-hpa-service
+  labels:
+    run: nginx-hpa-service
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 32000
+    port: 80
+    targetPort: 80
+  selector:
+    run: nginx-hpa
