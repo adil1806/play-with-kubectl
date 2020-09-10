@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    app: nginx-app
+spec:
+  replicas: 3
+  strategy:
+     rollingUpdate:
+          maxSurge: 0
+          maxUnavailable: 1
+     type: RollingUpdate
+  selector:
+    matchLabels:
+       app: nginx-app
+  template:
+    metadata:
+      labels:
+       app: nginx-app
+    spec:
+     containers:
+       - name: nginx-containers
+         image: mak1806/custom-nginx:v2.0
+         env:
+           - name: myname
+             value: adil
+           - name: city
+             value: lko
+         ports:
+          - containerPort: 80
