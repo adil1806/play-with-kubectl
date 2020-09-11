@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "nginxv1v2ingress"
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+  labels:
+    app: ingress-v1v2
+spec:
+  rules:
+    - host: v1.playwithdocker.ml
+      http:
+        paths:
+        - backend:
+            serviceName: "nginx-service-1"
+            servicePort: 80
+    - host: v2.playwithdocker.ml
+      http:
+        paths:
+        - backend:
+            serviceName: "nginx-service-2"
+            servicePort: 80

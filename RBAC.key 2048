@@ -1,0 +1,124 @@
+openssl genrsa -out adil.key 2048
+openssl req -new -key adil.key -out adil.csr -subj "/CN=adil/O=finance"
+cp /etc/kubernetes/pki/ca.crt /etc/kubernetes/pki/ca.key .
+openssl x509 -req -in adil.csr -CA ca.crt -CAkey ca.key  -CAcreateserial -out adil.crt -days 365
+
+
+cp ../.kube/config  adil.kubeconfig
+kubectl --kubeconfig adil.kubeconfig get pod
+kubectl create ns finance
+kubectl create role adil-finance --verb=list,get --resource=pods --namespace finance
+kubectl create rolebinding adil-finance-rolebinding --role=adil-finance --user=adil --namespace finance
+
+ROLE:
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: "2020-09-11T03:53:35Z"
+  managedFields:
+  - apiVersion: rbac.authorization.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:rules: {}
+    manager: kubectl-edit
+    operation: Update
+    time: "2020-09-11T03:59:40Z"
+  name: adil-finance
+  namespace: finance
+  resourceVersion: "603062"
+  selfLink: /apis/rbac.authorization.k8s.io/v1/namespaces/finance/roles/adil-finance
+  uid: 0de30fa1-a732-49ad-9b39-bd65f51085f6
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - '*'
+
+ROLEBINDING:
+kind: RoleBinding
+metadata:
+  creationTimestamp: "2020-09-11T03:55:50Z"
+  managedFields:
+  - apiVersion: rbac.authorization.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:roleRef:
+        f:apiGroup: {}
+        f:kind: {}
+        f:name: {}
+      f:subjects: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2020-09-11T03:55:50Z"
+  name: adil-finance-rolebinding
+  namespace: finance
+  resourceVersion: "602532"
+  selfLink: /apis/rbac.authorization.k8s.io/v1/namespaces/finance/rolebindings/adil-finance-rolebinding
+  uid: 7ccc6922-a67c-465a-b846-763866692d39
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: adil-finance
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: adil
+
+
+KUBECONFIG FILE:
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  creationTimestamp: "2020-09-11T03:55:50Z"
+  managedFields:
+  - apiVersion: rbac.authorization.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:roleRef:
+        f:apiGroup: {}
+        f:kind: {}
+        f:name: {}
+      f:subjects: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2020-09-11T03:55:50Z"
+  name: adil-finance-rolebinding
+  namespace: finance
+  resourceVersion: "602532"
+  selfLink: /apis/rbac.authorization.k8s.io/v1/namespaces/finance/rolebindings/adil-finance-rolebinding
+  uid: 7ccc6922-a67c-465a-b846-7638****ku92d39
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: adil-finance
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: adil
+root@master:~/rbac# cat adil.kubeconfig
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: 
+    server: https://12***47.23:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: adil
+    namespace: finance
+  name: adil-kubernetes
+current-context: adil-kubernetes
+kind: Config
+preferences: {}
+users:
+- name: adil
+  user:
+    client-certificate-data: 
+    client-key-data: 
+
+
+
+    TO swtich NS: kubectl  config set-context  --current --namespace=finance

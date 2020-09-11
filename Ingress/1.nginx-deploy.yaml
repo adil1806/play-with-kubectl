@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy-1
+  labels:
+    app: nginx-app-v1
+spec:
+  replicas: 2
+  minReadySeconds: 5
+  strategy:
+     rollingUpdate:
+          maxSurge: 0
+          maxUnavailable: 1
+     type: RollingUpdate
+  selector:
+    matchLabels:
+       app: nginx-appv1
+  template:
+    metadata:
+      labels:
+       app: nginx-appv1
+    spec:
+     containers:
+       - name: nginx-v1
+         image: mak1806/custom-nginx:v1.0
+         ports:
+          - containerPort: 80

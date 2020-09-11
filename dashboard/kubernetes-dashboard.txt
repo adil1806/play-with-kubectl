@@ -7,7 +7,7 @@ edit this service:
 kubectl edit svc kubernetes-dashboard -n kubernetes-dashboard
 
  19 spec:
- 20   clusterIP: 10.99.13.145
+ 20   clusterIP: 10.###145
  21   externalTrafficPolicy: Cluster
  22   ports:
  23   - nodePort: 31000   <--
@@ -26,8 +26,8 @@ kubectl edit svc kubernetes-dashboard -n kubernetes-dashboard
  
 root@master:~/play-with-kubectl/kubernetes# kubectl  get svc -n kubernetes-dashboard    
 NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE
-dashboard-metrics-scraper   ClusterIP   10.104.225.103   <none>        8000/TCP        29h
-kubernetes-dashboard        NodePort    10.99.13.145     <none>        443:31000/TCP   29h
+dashboard-metrics-scraper   ClusterIP   10.###.103   <none>        8000/TCP        29h
+kubernetes-dashboard        NodePort    10.##.145     <none>        443:31000/TCP   29h
 
 Check port listening or not...
 root@master:~/play-with-kubectl/kubernetes# lsof -i tcp:31000
