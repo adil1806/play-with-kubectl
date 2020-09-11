@@ -30,7 +30,7 @@ metadata:
   labels:
     run: nginx-hpa-service
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - nodePort: 32000
     port: 80
