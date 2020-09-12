@@ -49,34 +49,34 @@ sudo apt-get update
 sudo apt-get install nfs-common -y
 
 3. Check nfs file from client to server
-sudo showmount -e 3.20.66.155
+sudo showmount -e 3.####155
 
 4. create a directory in client to mount nfs
 mkdir /nfs-client
 
 5. M0unt 
-sudo mount -t nfs 3.20.66.155:/nfs-private /nfs-client
+sudo mount -t nfs 3.20####55:/nfs-private /nfs-client
 
 6. Check mount
 mount | grep nfs
 
-3.20.66.155:/nfs-private on /nfs-client type nfs4 (rw,relatime,vers=4.2,rsize=524288,wsize=524288,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=172.31.32.180,local_lock=none,addr=3.20.66.155)
+3.####55:/nfs-private on /nfs-client type nfs4 (rw,relatime,vers=4.2,rsize=524288,wsize=524288,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=172.#####180,local_lock=none,addr=3.20.66.155)
 
 7. 
 ubuntu@ip-172-31-32-180:~$ df -h
 Filesystem                Size  Used Avail Use% Mounted on
-3.20.66.155:/nfs-private   15G  8.4G  6.1G  58% /nfs-client
+3.2####155:/nfs-private   15G  8.4G  6.1G  58% /nfs-client
 
 
 ::: Permanent :::
 1. add this line 
 sudo vim /etc/fstab
 add this line
-3.20.66.155:/nfs-private   /nfs-client   nfs  defaults,_netdev 0 0
+3.20###55:/nfs-private   /nfs-client   nfs  defaults,_netdev 0 0
 
 
 2. then moune it. 
 sudo mount -a
 
 3. Check
-3.20.66.155:/nfs-private   15G  8.4G  6.1G  58% /nfs-client
+3.20###55:/nfs-private   15G  8.4G  6.1G  58% /nfs-client
