@@ -1,7 +1,6 @@
 
 
 
-
 ::::Ubuntu 18.04 NFS:::
 
 ::: from nfs server machine :::
