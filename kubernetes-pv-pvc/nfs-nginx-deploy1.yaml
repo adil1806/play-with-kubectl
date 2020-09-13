@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: nginx
+  name: nginx-deploy1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: nginx-1
+  template:
+    metadata:
+      labels:
+        run: nginx-1
+    spec:
+      nodeName: worker03
+      volumes:
+      - name: www
+        persistentVolumeClaim:
+          claimName: pvc-nfs-pv1
+      containers:
+      - image: nginx
+        name: nginx
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: nginx-service-1
+   labels:
+     app: service1
+spec:
+  selector:
+   run: nginx-1
+  type: NodePort
+  ports:
+   - port: 80
