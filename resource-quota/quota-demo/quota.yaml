@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: List
+items:
+    - apiVersion: v1
+      kind: ResourceQuota
+      metadata:
+         name: high-level
+      spec:
+       hard:
+         cpu: "1000m"
+         memory: "1Gi"
+         pods: "6"
+       scopeSelector:
+           matchExpressions:
+           - operator: In
+             scopeName: PriorityClass
+             values: [high]
+
+    - apiVersion: v1
+      kind: ResourceQuota
+      metadata:
+          name: medium-level
+      spec:
+       hard:
+         cpu: "600m"
+         memory: "500Mi"
+         pods: "4"
+       scopeSelector:
+           matchExpressions:
+           - operator: In
+             scopeName: PriorityClass
+             values: ["medium"]
+
+
+    - apiVersion: v1
+      kind: ResourceQuota
+      metadata:
+           name: low-level
+      spec: 
+        hard:
+          cpu: "200m"
+          memory: "300Mi"
+          pods: "2"
+        scopeSelector:
+           matchExpressions:
+           - operator: In
+             scopeName: PriorityClass
+             values: ["low"]
+
