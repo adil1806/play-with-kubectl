@@ -11,5 +11,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 3.20.66.155
+    server: 3.******155
     path: "/nfs-private"
