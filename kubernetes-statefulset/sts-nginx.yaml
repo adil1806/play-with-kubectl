@@ -18,7 +18,7 @@ metadata:
   name: nginx-sts
 spec:
   serviceName: "nginx-headless"
-  replicas: 6
+  replicas: 5
   #podManagementPolicy: Parallel
   selector:
     matchLabels:
@@ -33,7 +33,7 @@ spec:
         image: nginx
         volumeMounts:
         - name: www
-          mountPath: /var/www/
+          mountPath: /usr/share/nginx/html/
   volumeClaimTemplates:
   - metadata:
       name: www
