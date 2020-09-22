@@ -4,6 +4,24 @@ cp /etc/kubernetes/pki/ca.crt /etc/kubernetes/pki/ca.key .
 openssl x509 -req -in adil.csr -CA ca.crt -CAkey ca.key  -CAcreateserial -out adil.crt -days 365
 
 
+After getting all these file:
+total 20
+-rw------- 1 root root 1675 Sep 21 10:25 pyrus.key
+-rw-r--r-- 1 root root  911 Sep 21 10:26 pyrus.csr
+-rw------- 1 root root 1675 Sep 21 10:26 ca.key
+-rw-r--r-- 1 root root 1066 Sep 21 10:26 ca.crt
+-rw-r--r-- 1 root root 1013 Sep 21 10:46 pyrus.crt
+
+1st method:  
+set cluster
+1. kubectl --kubeconfig pyrus.kubeconfig config set-cluster kubernetes --server https://********:6443 --certificate-authority=ca.crt
+
+Setting credential
+2. kubectl --kubeconfig pyrus.kubeconfig config set-credentials pyrus --client-certificate ~/kubernetes-rbac-demo/pyrus.crt --client-key ~/kubernetes-rbac-demo/pyrus.key
+
+setting context
+3. kubectl --kubeconfig pyrus.kubeconfig config set-context pyrus-kubernetes --cluster kubernetes --namespace finance  --user pyrus
+
 cp ../.kube/config  adil.kubeconfig
 kubectl --kubeconfig adil.kubeconfig get pod
 kubectl create ns finance
