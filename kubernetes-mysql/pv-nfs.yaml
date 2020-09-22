@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-nfs-pv1
+  name: pv1
   labels:
     type: local
 spec:
   storageClassName: manual
   capacity:
-    storage: 200Mi
+    storage: 1Gi
   accessModes:
     - ReadWriteMany
   nfs:
-    server: fs-adf779d5.efs.us-east-2.amazonaws.com 
-    path: "/nfs-private"
+    server: 3.20.66.155
+    path: "/nfs-private/pv1"

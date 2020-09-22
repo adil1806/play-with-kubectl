@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-demo
+  labels:
+    app: mydata
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mydata
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mydata
+        version: v1
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        volumeMounts:
+        - name: index-html
+          mountPath: /usr/share/nginx/html
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: index-html
+        configMap:
+          name: config-index.html

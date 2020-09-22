@@ -11,4 +11,4 @@ spec:
    capacity:
        storage: 50Mi
    hostPath:
-       path: "/mnt/data"
+       path: "/mnt/data/"  #this directory has to be present in worker node where this pod will be created

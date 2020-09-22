@@ -1,0 +1,14 @@
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: podview-rolebinding
+  namespace: default
+subjects:
+  - kind: ServiceAccount
+    name: pod-view
+    namespace: default
+roleRef:
+  kind: Role
+  name: podview-role
+  apiGroup: rbac.authorization.k8s.io
