@@ -35,8 +35,9 @@ spec:
         - mountPath: /etc/mysql/conf.d
           name: mariadb-config-volume
       volumes:
-      - emptyDir: {}
-        name: mariadb-volume-1
+      - name: mariadb-volume-1
+        persistentVolumeClaim:
+                claimName: claim-mysql
       - configMap:
           name: mariadb-config
           items:
