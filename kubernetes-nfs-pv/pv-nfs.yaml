@@ -11,5 +11,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: fs-adf779d5.efs.us-east-2.amazonaws.com 
+    server: 3.20.66.155 
     path: "/nfs-private"

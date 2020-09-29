@@ -2,14 +2,12 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
     name: nginx-ingress
-    annotations:
-      kubernetes.io/ingress.class: alb
 spec:
  rules:
-  - host: mynginx.com
+  - host: nginx.playwithdocker.ml
     http:
       paths:
-         - path: /*
+         - path: /v2
            backend:
-              serviceName: "nginx-hpa-service"
+              serviceName: "service-2048"
               servicePort: 80
