@@ -1,14 +1,29 @@
 apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-for-pod
+  labels:
+    name: pvc-busy-box
+spec:
+  storageClassName: managed-nfs-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
 kind: Pod
 metadata:
    name: test-vol
 spec:
   containers:
-   - image: nginx
+   - image: busybox
      name: test-container
      volumeMounts:
-       - name: test-vol
-         mountPath: /cache
+       - name: nfs-dynamic-storage
+         mountPath: /nfs-storage-on-pod
   volumes:
-  - name: test-vol
-    emptyDir: {}
+  - name: nfs-dynamic-storage
+  persistentVolumeClaim:
+  claimName: pvc-for-pod
