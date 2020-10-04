@@ -7,6 +7,6 @@ spec:
   - image: nginx
     name: nginx
   tolerations:
-      - key: "taint_key"
+      - key: "key"
         operator: "Exists"
-        effect: "NoSchedule"
+        effect: "NoExecute"
