@@ -1,8 +1,7 @@
-### DEMO
+#STEP for AWS EBS Dynamic Provisioning
 1. Create a policy for your node instance profile that allows the Amazon EBS CSI Driver to make calls to AWS APIs on your behalf.for your node instance profile that allows the Amazon EBS CSI Driver to make calls to AWS APIs on your behalf.
-
 aws iam create-policy --policy-name Amazon_EBS_CSI_Driver \
-    --policy-document file://example-iam-policy.json
+--policy-document file://example-iam-policy.json
 
 2. Getting node rolearm name:
 kubectl -n kube-system describe configmap aws-auth | grep rolearn | cut -d '/' -f2
