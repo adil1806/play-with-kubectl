@@ -27,3 +27,10 @@ kubectl create -f claim.yaml
 
 
 # Refer AWS Doc: https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html
+
+
+# For Other cluster type:
+create IAM policy using step: 1
+and go to IAM console and create IAM role and add this policy to that role.
+Now, go to EC2 console and attach this IAM role to the k8s worker node 
+and rest steps is same.
