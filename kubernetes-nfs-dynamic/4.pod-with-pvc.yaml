@@ -18,7 +18,7 @@ metadata:
    name: test-vol
 spec:
   containers:
-   - image: busybox
+   - image: nginx
      name: test-container
      volumeMounts:
        - name: nfs-dynamic-storage

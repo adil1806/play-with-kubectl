@@ -3,5 +3,8 @@ kind: StorageClass
 metadata:
   name: managed-nfs-storage
 provisioner: example.com/nfs
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
 parameters:
   archiveOnDelete: "false"

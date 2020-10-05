@@ -38,9 +38,9 @@ spec:
   - metadata:
       name: www
     spec:
-      storageClassName: manual
+      storageClassName: managed-nfs-storage
       accessModes:
-        - ReadWriteOnce
+        - ReadWriteMany
       resources:
         requests:
           storage: 200Mi
