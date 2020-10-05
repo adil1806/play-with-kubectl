@@ -11,7 +11,7 @@ kubectl -n kube-system describe configmap aws-auth | grep rolearn | cut -d '/' -
 
 # 3. Attach policy to that nodegroup:
 aws iam attach-role-policy \
---policy-arn policy-arn-number
+--policy-arn policy-arn-number \
 --role-name output from step-2
   
 # 4. Now, create a StorageClass
