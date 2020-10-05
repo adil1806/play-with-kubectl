@@ -3,8 +3,8 @@ apiVersion: storage.k8s.io/v1
 metadata:
   name: ebs-sc
 provisioner: ebs.csi.aws.com
-volumeBindingMode: Immediate
-#volumeBindingMode: WaitForFirstConsumer
+#volumeBindingMode: Immediate
+volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
-reclaimPolicy: Delete
-#reclaimPolicy: Retain
+#reclaimPolicy: Delete
+reclaimPolicy: Retain
