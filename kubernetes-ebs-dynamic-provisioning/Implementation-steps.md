@@ -13,10 +13,17 @@ kubectl -n kube-system describe configmap aws-auth | grep rolearn | cut -d '/' -
 aws iam attach-role-policy \
 --policy-arn policy-arn-number \
 --role-name output from step-2
+
+# 5. Deploy the Amazon EBS CSI Driver
+kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=master"
+
   
-# 4. Now, create a StorageClass
+# 5. Now, create a StorageClass
 kubectl create -f storageclass.yaml
 
-# 5. Now, create a claim:
+# 6. Now, create a claim:
 kubectl create -f claim.yaml
 # Here, You see by creating a claim kubernetes provisioned a persistent volume of type AWS EBS.
+
+
+# Refer AWS Doc: https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html
