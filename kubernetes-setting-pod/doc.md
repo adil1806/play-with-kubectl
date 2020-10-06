@@ -1,5 +1,5 @@
 1. Check the description of node. Before it was 110 pod can schedule on this worker node
-   ➤ ➤ ADIL ubuntu  kubectl describe no ip-172-31-32-180 | grep -i pods
+➤ ➤ ADIL ubuntu  kubectl describe no ip-172-31-32-180 | grep -i pods
   pods:               110          
 1. First login to worker node.
 2. sudo systemctl status kubelet
