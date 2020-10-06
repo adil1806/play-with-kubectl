@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   name: app
 spec:
+  nodeName: worker03
   containers:
   - name: app
     image: centos
