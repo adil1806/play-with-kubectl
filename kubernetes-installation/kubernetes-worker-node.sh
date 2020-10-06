@@ -32,3 +32,4 @@ apt-get install -y \
         kubeadm \
         kubernetes-cni \
         nfs-common
+# nfs-common util for nfs dynamic provisioning
