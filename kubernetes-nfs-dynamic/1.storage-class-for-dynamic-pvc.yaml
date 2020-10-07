@@ -4,7 +4,7 @@ metadata:
   name: managed-nfs-storage
 provisioner: example.com/nfs
 reclaimPolicy: Delete
-volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: Immediate
 allowVolumeExpansion: true
 parameters:
   archiveOnDelete: "false"
