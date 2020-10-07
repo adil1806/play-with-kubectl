@@ -30,4 +30,6 @@ systemctl start docker
 apt-get install -y \
         kubelet \
         kubeadm \
-        kubernetes-cni
+        kubernetes-cni \
+        nfs-common
+# nfs-common util for nfs dynamic provisioning
