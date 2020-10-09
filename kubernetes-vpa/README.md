@@ -235,7 +235,7 @@ myapp-5856985dc8-qg9q4   1/1     Running       0          9s
 This requested is automatic change using VPA:
 The updateMode field has a value of Auto, which means that the VerticalPodAutoscaler can update CPU and memory requests during the life of a Pod. That is, the VerticalPodAutoscaler can delete a Pod, adjust the CPU and memory requests, and then start a new Pod.
 
-We can also verigy by seeing pods:
+We can also verify by seeing pods yaml's:
 kubectl get pods myapp-5856985dc8-jwdmz -o yaml
 apiVersion: v1
 kind: Pod
