@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 public class HelloworldApplication {
-	@Value("${TARGET:World}")
+	@Value("${TARGET:Kubernetes}")
         String target;
 
         @RestController
