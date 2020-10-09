@@ -77,12 +77,12 @@ kube-system   kube-scheduler-master                 3m           21Mi
 kube-system   metrics-server-7d58cbc7df-xzcf6       1m           12Mi
 
 
-Till here we deploy metrics server on out cluster..
+Till here we deploy metrics server on our cluster..
 ```
 Installing  VP Autoscaler:
 ```
 Clone this repo: https://github.com/kubernetes/autoscaler.git
-or this repo already present on my repo.
+OR this repo already present on my git repo.
 
 pwd
 /root/play-with-kubectl/kubernetes-vpa/autoscaler/vertical-pod-autoscaler/hack
