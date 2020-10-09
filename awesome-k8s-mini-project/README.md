@@ -1,17 +1,18 @@
 # K8s Mini Project Demo
 
-Deploying a application on k8s cluster
+Deploying a maven based application on k8s cluster
 
 ## Getting Started
-
+```
 Create a Hello World app.
+
 Package the app into a container image using Docker Build.
 Create a cluster.
 Deploy the container image to your cluster.
-
+```
 ### Prerequisites
 
-Setup for k8s cluster
+Setup for k8s cluster and maven 
 
 ### Installing
 
