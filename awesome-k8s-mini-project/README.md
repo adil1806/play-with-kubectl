@@ -76,7 +76,7 @@ Endpoint is pointing to Internal IP of pod.
 
  kubectl get po -o wide
 NAME                                 READY   STATUS    RESTARTS   AGE    IP            NODE        NOMINATED NODE   READINESS GATES
-myapp-97d6477d6-rgcxx                1/1     Running   0          15m    **10.244.3.14**   kworker03   <none>           <none>
+myapp-97d6477d6-rgcxx                1/1     Running   0          15m    10.244.3.14   kworker03   <none>           <none>
 
 Now, let's access your application
 curl 3.15.174.220:30364
@@ -85,7 +85,7 @@ Hello Kubernetes!#
 
 ## Contributing
 
-Please read(https://github.com/adil1806/play-with-kubectl.git) for details on K8s.
+Please read(https://github.com/adil1806/play-with-kubectl.git) for more details on K8s.
 
 
 ## Authors
