@@ -220,8 +220,31 @@ NAME                     READY   STATUS    RESTARTS   AGE
 myapp-5856985dc8-6tv9z   1/1     Running   0          3m43s
 myapp-5856985dc8-jwdmz   1/1     Running   0          22s
 
+VPA resouce request recommendation is:
+ kubectl describe vpa | tail -17
+    Type:                  RecommendationProvided
+  Recommendation:
+    Container Recommendations:
+      Container Name:  hello-app
+      Lower Bound:
+        Cpu:     25m
+        Memory:  262144k
+      Target:
+        Cpu:     25m
+        Memory:  262144k
+      Uncapped Target:
+        Cpu:     25m
+        Memory:  262144k
+      Upper Bound:
+        Cpu:     694m
+        Memory:  11560929562
+Events:          <none>
+
+So, what this will do is destroy the old pod and create new pod using this resource request.
+
 We can see that one pod recreated with new resouce request.
 Notice that the Pod names have changed.
+
 kubectl get pods
 NAME                     READY   STATUS        RESTARTS   AGE
 myapp-5856985dc8-6tv9z   0/1     Terminating   0          4m30s
@@ -236,6 +259,7 @@ This requested is automatic change using VPA:
 The updateMode field has a value of Auto, which means that the VerticalPodAutoscaler can update CPU and memory requests during the life of a Pod. That is, the VerticalPodAutoscaler can delete a Pod, adjust the CPU and memory requests, and then start a new Pod.
 
 We can also verify by seeing pods yaml's:
+
 kubectl get pods myapp-5856985dc8-jwdmz -o yaml
 apiVersion: v1
 kind: Pod
