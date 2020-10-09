@@ -147,8 +147,8 @@ So, We have deployed metrics server as well as VP autoscaler..!!!!
 
 ## Running VPA
 
-```
 ### Getting resource recommendations from VPA
+```
 Let's deploy recommended VPA and one deploy for that:
 For this we will use two file:
 1.  1.vpa-recommend.yaml
@@ -188,8 +188,9 @@ Events:          <none>
 
 Yes, We are getting the recommendation for mentioned deployments..
 Now that you have the recommended CPU and memory requests, you might choose to delete your Deployment, add CPU and memory requests to your Deployment manifest, and start your Deployment again
-
+```
 ### Updating resource requests automatically
+```
 We create a Deployment that has two Pods. Each Pod has one container that requests 70 milliCPU and 30 mebibytes of memory. Then you create a VerticalPodAutoscaler that automatically adjusts the CPU and memory requests.
 
 For this we will use two file:
