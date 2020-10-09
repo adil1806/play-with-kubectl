@@ -78,9 +78,9 @@ kube-system   metrics-server-7d58cbc7df-xzcf6       1m           12Mi
 
 
 Till here we deploy metrics server on out cluster..
-
-Let's deploy Vp autoscaler:
-
+```
+Installing  VP Autoscaler:
+```
 Clone this repo: https://github.com/kubernetes/autoscaler.git
 or this repo already present on my repo.
 
