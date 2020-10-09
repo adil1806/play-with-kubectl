@@ -5,7 +5,6 @@ Deploying a maven based application on k8s cluster
 ## Getting Started
 ```
 Create a Hello World app.
-
 Package the app into a container image using Docker Build.
 Create a cluster.
 Deploy the container image to your cluster.
@@ -15,10 +14,7 @@ Deploy the container image to your cluster.
 Setup for k8s cluster and maven 
 
 ### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+for building the application maven is required.
 
 ```
 Give the example
