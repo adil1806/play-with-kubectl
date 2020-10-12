@@ -6,4 +6,4 @@ spec:
   containers:
   - image: nginx
     name: nginx
-  serviceAccountName: pod-view
+  serviceAccountName: podview-role
