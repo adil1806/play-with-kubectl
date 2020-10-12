@@ -6,7 +6,7 @@ For running LXC, Create a EC2 instance of t2.medium size which will sufficient f
 ```
 #### Installing the LXC on Ubuntu 
 ```
-➤ ➤ ADIL ~  sudo apt-get update && apt-get install lxc -y
+➤ ➤ ADIL ~  sudo apt-get update && apt-get install lxc -y or sudo snap install lxd
 ➤ ➤ ADIL ~  systemctl status lxc
 ➤ ➤ ADIL ~  lxd init
 Provide default option for all excepy these two line:
