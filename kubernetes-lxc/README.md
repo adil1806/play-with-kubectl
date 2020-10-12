@@ -26,5 +26,36 @@ config:
     sys:rw"
   security.nesting: "true"
   security.privileged: "true"
+```
+#### It's time to create node for k8s cluster
+```
+➤ ➤ ADIL ~  lxc launch images:centos/7 kmaster --profile k8s
+Creating kmaster
+Starting kmaster
+➤ ➤ ADIL ~  lxc launch images:centos/7 kworker01 --profile k8s
+Creating kworker01
+Starting kworker01
+➤ ➤ ADIL ~  lxc launch images:centos/7 kworker02 --profile k8s
+Creating kworker02
+Starting kworker02
 
+List the node:
+➤ ➤ ADIL ~  lxc list
++-----------+---------+-----------------------+----------------------------------------------+------------+-----------+
+|   NAME    |  STATE  |         IPV4          |                     IPV6                     |    TYPE    | SNAPSHOTS |
++-----------+---------+-----------------------+----------------------------------------------+------------+-----------+
+| kmaster   | RUNNING | 10.127.221.187 (eth0) | fd42:d04d:d3e7:433:216:3eff:fe61:e128 (eth0) | PERSISTENT | 0         |
++-----------+---------+-----------------------+----------------------------------------------+------------+-----------+
+| kworker01 | RUNNING | 10.127.221.49 (eth0)  | fd42:d04d:d3e7:433:216:3eff:fef8:af2d (eth0) | PERSISTENT | 0         |
++-----------+---------+-----------------------+----------------------------------------------+------------+-----------+
+| kworker02 | RUNNING | 10.127.221.151 (eth0) | fd42:d04d:d3e7:433:216:3eff:fe28:77dc (eth0) | PERSISTENT | 0         |
++-----------+---------+-----------------------+----------------------------------------------+------------+-----------+
+```
+#### Now run bootstrap script on all node.
+```
+It is mandatory on run this bootstrap script on master node first.
+➤ ➤ ADIL kubernetes-lxc git:(master)  cat bootstrap-kube.sh| lxc exec kmaster bash
+➤ ➤ ADIL kubernetes-lxc git:(master)  cat bootstrap-kube.sh| lxc exec kworker01 bash
+➤ ➤ ADIL kubernetes-lxc git:(master)  cat bootstrap-kube.sh| lxc exec kworker02 bash
+This will take some time... Just Relax :)
 ```
