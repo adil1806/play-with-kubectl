@@ -9,7 +9,7 @@ For running LXC, Create a EC2 instance of t2.medium size which will sufficient f
 ➤ ➤ ADIL ~  sudo apt-get update && apt-get install lxc -y or sudo snap install lxd
 ➤ ➤ ADIL ~  systemctl status lxc
 ➤ ➤ ADIL ~  lxd init
-Provide default option for all excepy these two line:
+Provide default option for all except these two line:
 Name of the storage backend to use (btrfs, dir, lvm) [default=btrfs]: dir
 Would you like LXD to be available over the network? (yes/no) [default=no]: yes
 ```
@@ -63,7 +63,7 @@ List the node:
 ```
 #### Now, run bootstrap script on all node.
 ```
-It is mandatory on run this bootstrap script on master node first.
+It is mandatory to run this bootstrap script on master node first.
 ➤ ➤ ADIL kubernetes-lxc git:(master)  cat bootstrap-kube.sh | lxc exec kmaster bash
 ➤ ➤ ADIL kubernetes-lxc git:(master)  cat bootstrap-kube.sh | lxc exec kworker01 bash
 ➤ ➤ ADIL kubernetes-lxc git:(master)  cat bootstrap-kube.sh | lxc exec kworker02 bash
