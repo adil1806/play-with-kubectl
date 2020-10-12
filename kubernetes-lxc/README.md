@@ -89,6 +89,7 @@ This will take some time... Just Relax :)
 The bootstrap script will deploy flannel for networking.
 ```
 #### Verify the work
+##### Exec into kmaster node
 ```
 ➤ ➤ ADIL kubernetes-lxc git:(master)  lxc exec kmaster bash
 ```
