@@ -157,4 +157,31 @@ Connection: keep-alive
 ETag: "5f7340cf-264"
 Accept-Ranges: bytes
 ```
-#### We can access nginx.. !!!
+##### We can access nginx.. !!!
+
+#### To access k8s cluster without execing into kmaster node
+
+##### Download the kubectl command into your local, I have already present..!
+```
+➤ ➤ ADIL kubernetes-lxc git:(master)  which kubectl
+/usr/bin/kubectl
+```
+##### Create .kube directory
+```
+➤ ➤ ADIL kubernetes-lxc git:(master)  mkdir ~/.kube
+```
+##### copy config from kmaster into .kube directory
+```
+➤ ➤ ADIL kubernetes-lxc git:(master)  lxc file pull kmaster/etc/kubernetes/admin.conf ~/.kube/config
+➤ ➤ ADIL .kube  ll ~/.kube
+total 8
+-rw------- 1 root root 5570 Oct 12 08:05 config
+```
+##### Try to access k8s cluster without execing into kmaster node.
+```
+➤ ➤ ADIL .kube  kubectl get no
+NAME        STATUS   ROLES    AGE   VERSION
+kmaster     Ready    master   23m   v1.19.2
+kworker01   Ready    <none>   19m   v1.19.2
+kworker02   Ready    <none>   17m   v1.19.2
+```
