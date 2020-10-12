@@ -1,0 +1,34 @@
+============================== For making ssh to root user ========================================
+vim /etc/ssh/sshd_config
+
+In Authentication secrion add this:
+PermitRootLogin yes	<--
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+
+Save the updated /etc/ssh/sshd_config file.
+service sshd restart
+enable passwordauthen to yes and comment for no
+
+ssh-keygen
+ssh-copy-id <user>@<private_ips>
+==============================================================================================================
+						  ERRORS
+===============================================================================================================
+ERROR: While running ansible playbook for kubespray k8s cluster: The ipaddr filter requires python-netaddr be installed on the ansible controller.
+Solution: apt install python-netaddr
+
+
+ERROR: The connection to the server localhost:8080 was refused - did you specify the right host or port?
+Solution:  mkdir -p $HOME/.kube
+	   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+	   sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+ERROR: bash: ping: command not found inside container
+Solution: apt-get update
+	  apt-get install iputils-ping
+
+
+ERROR: To label worker node in K8s cluster:
+Solution: kubectl label node kworker01 node-role.kubernetes.io/worker=worker
