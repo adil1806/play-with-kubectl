@@ -3,8 +3,9 @@
 ```
 cd to play-with-kubectl/kubernetes-ebs-dynamic-provisioning/
 ```
-##### aws iam create-policy --policy-name Amazon_EBS_CSI_Driver \
+##### Creating AWS Policy 
 ```
+aws iam create-policy --policy-name Amazon_EBS_CSI_Driver \
 --policy-document file://example-iam-policy.json
 ```
 
