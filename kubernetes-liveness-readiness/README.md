@@ -56,3 +56,14 @@ liveness-64b7c78d84-4zsfp   0/1     CrashLoopBackOff   4          7m46s
 ```
 #### This Keep on restarting the pods.
 
+#### Now, exec into node kworker01 and create a index.html file
+```
+[root@kworker01 ~]# echo "khan" /opt/index.html
+khan /opt/index.html
+```
+#### Now, pod is in running state
+```
+➤ ➤ ADIL kubernetes-liveness-readiness git:(master)  kubectl get pods
+NAME                        READY   STATUS    RESTARTS   AGE
+liveness-64b7c78d84-4zsfp   1/1     Running   6          9m52s
+```
