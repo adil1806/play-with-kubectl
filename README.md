@@ -1,3 +1,5 @@
 # play-with-kubectl
 Deliberate exercises for Kubernetes
-![alt text](https://github.com/kubernetes/kubernetes/raw/master/logo/logo.png width="100")
+<img src="https://github.com/adil1806/play-with-kubectl/blob/master/kubernetes-logo/logo_with_border.png"  width="100">
+
+----
