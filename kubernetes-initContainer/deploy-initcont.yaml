@@ -1,0 +1,33 @@
+######################### exmaple of node selector ########################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    app: nginx-app
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  strategy:
+     rollingUpdate:
+          maxSurge: 0
+          maxUnavailable: 1
+     type: RollingUpdate
+  selector:
+    matchLabels:
+       app: nginx-app
+  template:
+    metadata:
+      labels:
+       app: nginx-app
+    spec:
+     containers:
+       - name: nginx
+         image: nginx
+         ports:
+          - containerPort: 80
+     initContainers:
+       - name: side
+         image: debian
+         command: ["/bin/sh"]
+         args: ["-c", "apt update && apt install dnsutils -y && nslookup nginx-deploy.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" ]
