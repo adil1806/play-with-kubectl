@@ -14,6 +14,25 @@ spec:
       labels:
         app: nginx
     spec:
+      nodeName: kworker01
       containers:
       - image: nginx
         name: nginx
+        volumeMounts:
+           - name: nginx-vol
+             mountPath: /usr/share/nginx/html/
+        livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+      volumes:
+        - name: nginx-vol
+          hostPath:
+            path: /opt/
+            # create index.html file under /opt/ directory to pas liveness probe. otherwise it will fail as nginx is not reachable
+            type:  Directory
