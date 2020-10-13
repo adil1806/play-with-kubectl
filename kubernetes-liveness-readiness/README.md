@@ -24,7 +24,7 @@ deployment.apps/liveness created
 NAME                        READY   STATUS    RESTARTS   AGE    IP            NODE        NOMINATED NODE   READINESS GATES
 liveness-64b7c78d84-4zsfp   1/1     Running   0          112s   10.244.1.41   kworker01   <none>           <none>
 ```
-##### For this I used Hostpath and the path is /opt/ and mount to /usr/share/nging/html/
+##### For this I used Hostpath and the path is /opt/ and mount to /usr/share/nginx/html/
 ```
 Mounts:
       /usr/share/nginx/html/ from nginx-vol (rw)
