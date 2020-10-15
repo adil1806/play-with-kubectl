@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+     matchLabels:
+         app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+           requests:
+               memory: 7Gi 
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/ # mount nginx-conf volumn to /etc/nginx
+          readOnly: true
+          name: nginx-conf
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-html # place ConfigMap  on /etc/nginx
+          items:
+            - key: index.html
+              path: index.html
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: nginx

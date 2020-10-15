@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: nginx-html
+data:
+  index.html: |
+      <h4> Welcome, This Page is brought to you by ConfigMap </h4>
