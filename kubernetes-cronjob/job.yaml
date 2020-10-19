@@ -1,0 +1,25 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  labels:
+    run: crontest
+  name: crontest
+spec:
+  schedule: '*/1 * * * *'
+  jobTemplate:
+     spec:
+       template:
+           spec:
+             containers:
+             - image: nginx
+               name: crontest
+               command: ["/bin/bash"]
+               args: ["-c", "echo CronJob >> /opt/index.html"]
+               volumeMounts:
+                    - name: vol
+                      mountPath: /opt/
+             restartPolicy: OnFailure
+             volumes:
+                - name: vol
+                  persistentVolumeClaim:
+                      claimName: pvc2
