@@ -21,6 +21,7 @@ mkdir /nfs-private
 
 6. Give permission
 sudo mkdir /nfs-private
+sudo chmod 777 /nfs-private
 
 7. Now, add this nfs directory in /etc/exports
 sudo vim /etc/exports
