@@ -41,7 +41,7 @@ $ helm version --short
 Client: v2.17.0-rc.1+ga690bad
 Server: v2.17.0-rc.1+ga690bad
 ```
-### Demo on Helm Chart
+#### Demo on Helm Chart
 ```
 Go to my-nginx directory
 
