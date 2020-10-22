@@ -1,9 +1,7 @@
 ### Started With HELM & Tiller
-
 #### Helm Setup
+##### Current k8s cluster version
 ```
-Current k8s cluster version
-
 $ kubectl version --short
 Client Version: v1.19.3
 Server Version: v1.19.3
@@ -42,9 +40,8 @@ Client: v2.17.0-rc.1+ga690bad
 Server: v2.17.0-rc.1+ga690bad
 ```
 #### Demo on Helm Chart
+##### Go to my-nginx directory
 ```
-Go to my-nginx directory
-
 $ helm install --name my-nginx .
 
 $ helm delete --purge my-nginx
