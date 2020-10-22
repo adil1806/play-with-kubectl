@@ -41,3 +41,19 @@ $ helm version --short
 Client: v2.17.0-rc.1+ga690bad
 Server: v2.17.0-rc.1+ga690bad
 ```
+### Demo on Helm Chart
+```
+Go to my-nginx directory
+
+$ helm install --name my-nginx .
+
+$ helm delete --purge my-nginx
+
+$ helm list
+
+$ helm upgrade my-nginx .
+
+$ helm upgrade my-nginx --set replicaCount=5
+
+$ helm rollback my-nginx 1
+```
