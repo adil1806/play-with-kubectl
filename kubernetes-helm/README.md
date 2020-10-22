@@ -56,4 +56,6 @@ $ helm upgrade my-nginx .
 $ helm upgrade my-nginx --set replicaCount=5
 
 $ helm rollback my-nginx 1
+
+$ helm create myapp
 ```
