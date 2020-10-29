@@ -14,7 +14,6 @@ spec:
       labels:
         app: nfs-client-provisioner
     spec:
-      nodeName: kworker02
       serviceAccountName: nfs-client-provisioner
       containers:
         - name: nfs-client-provisioner
