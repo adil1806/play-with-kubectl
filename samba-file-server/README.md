@@ -27,9 +27,9 @@ $ sudo systemctl enable smbd nmbd
 ###### ping 3.20.63.104 //ip of samba server
 ```
 $ yum -y install samba samba-client cifs-utils
-$ mount -t cifs -o user=adil,password=123 //3.20.63.104/my-smb-share /mnt
+$ mount -t cifs -o user=****,password=*** //3.**.**.104/my-smb-share /mnt
 $ cd /mnt/
 $ df -HT
 Filesystem                 Type      Size  Used Avail Use% Mounted on
-//3.20.63.104/my-smb-share cifs       30G  5.6G   24G  20% /mnt
+//3.**.**.104/my-smb-share cifs       30G  5.6G   24G  20% /mnt
 ```
