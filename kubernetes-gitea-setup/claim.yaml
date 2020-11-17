@@ -5,7 +5,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: ebs-sc
+  storageClassName: managed-nfs-storage
   resources:
     requests:
-      storage: 1Gi
+      storage: 500Mi
