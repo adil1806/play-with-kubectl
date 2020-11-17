@@ -14,7 +14,6 @@ spec:
       labels:
         app: gitea
     spec:
-      nodeName: kworker01
       containers:
       - name: gitea
         image: gitea/gitea:latest
@@ -23,10 +22,10 @@ spec:
           name: gitea
         - containerPort: 22
           name: git-ssh
-          #        volumeMounts:
-          # - mountPath: /data
-          #  name: git-data
-          # volumes:
-          # - name: git-data
-          # persistentVolumeClaim:
-          #   claimName: gitea-pvc
+        volumeMounts:
+        - mountPath: /data
+          name: git-data
+      volumes:
+      - name: git-data
+        persistentVolumeClaim:
+          claimName: gitea-pvc
