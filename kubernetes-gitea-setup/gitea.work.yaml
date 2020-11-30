@@ -1,3 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitea-headless
+  labels:
+    run: gitea
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    run: gitea
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -5,6 +19,7 @@ metadata:
   labels:
     app: gitea
 spec:
+  serviceName: gitea-headless
   replicas: 1
   selector:
     matchLabels:
