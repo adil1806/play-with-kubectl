@@ -17,17 +17,8 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
         - name: gitea
-          image: 
-          imagePullPolicy: gitea/gitea:1.14
-          env:
-            - name: SSH_LISTEN_PORT
-              value: {{ .Values.gitea.config.server.SSH_LISTEN_PORT | quote }}
-            - name: SSH_PORT
-              value: {{ .Values.gitea.config.server.SSH_PORT | quote }}
-            {{- range .Values.statefulset.env }}
-            - name: {{ .name | quote | nospace }}
-              value: {{ .value | quote }}
-            {{- end }}
+          image: gitea/gitea:1.12
+          imagePullPolicy: Always
           ports:
             - name: ssh
               containerPort: 22
