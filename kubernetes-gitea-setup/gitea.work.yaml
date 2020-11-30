@@ -57,10 +57,6 @@ spec:
           volumeMounts:
             - name: gitea-pvc
               mountPath: /data
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: gitea-pvc
   volumeClaimTemplates:
     - metadata:
         name: gitea-pvc
