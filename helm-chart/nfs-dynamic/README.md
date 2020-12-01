@@ -1,0 +1,4 @@
+## Making Storage Class as default
+```
+kubectl patch storageclass managed-nfs-storage -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
