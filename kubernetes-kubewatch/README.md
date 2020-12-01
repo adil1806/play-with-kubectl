@@ -1,5 +1,6 @@
 ## Kubewatch
 #### Install helm v3
+#### For helm installation: https://github.com/adil1806/play-with-kubectl/tree/master/kubernetes-helm
 ```
 ➜  ~ helm version --short
 v3.4.1+gc4e7485
