@@ -1,11 +1,11 @@
-#### Kubewatch
-##### Install helm v3
+## Kubewatch
+#### Install helm v3
 ```
 ➜  ~ helm version --short
 v3.4.1+gc4e7485
 ```
 
-###### Add Bitnami repo to our helm [ https://github.com/bitnami/charts ]
+#### Add Bitnami repo to our helm [ https://github.com/bitnami/charts ]
 ```
 helm repo add bitnami https://charts.bitnami.com/bitnami
 ➜  ~ helm repo list
@@ -17,7 +17,7 @@ bitnami https://charts.bitnami.com/bitnami
 ➜  ~ helm repo update
 ```
 
-##### Download bitnami/kubewatch values file and edit acc. to our requirements
+#### Download bitnami/kubewatch values file and edit acc. to our requirements
 ```
 ➜  ~ helm show values bitnami/kubewatch > /tmp/kubewatch-values.yaml
 
