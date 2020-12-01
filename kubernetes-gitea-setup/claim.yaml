@@ -4,8 +4,8 @@ metadata:
   name: gitea-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: managed-nfs-storage
   resources:
     requests:
-      storage: 500Mi
+      storage: 1Gi
