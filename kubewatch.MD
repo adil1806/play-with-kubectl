@@ -27,10 +27,10 @@ Edit
 slack:
   enabled: true
   # Slack channel to notify
-  channel: "k8s-kubewatch"
+  channel: "XXXXXXX"
   # Slack bots token. Create using: https://my.slack.com/services/new/bot
   # and invite the bot to your channel using: /join @botname
-  token: "xoxb-945094518656-1535979740741-UiXVgJdxA04aJJT0m9jKqAAG"
+  token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   
 resourcesToWatch:
   deployment: true
@@ -53,4 +53,14 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   ##
   name: "kubewatch"
+```
+#### Now, install chart
+```
+➜  ~ helm install kubewatch bitnami/kubewatch --values /tmp/kubewatch-values.yaml
+```
+
+#### Check the pods for kubewatch
+```
+➜  ~ kubectl get pods | grep kubewatch
+kubewatch-59849596b8-lc7pl                1/1     Running   0          9m9s
 ```
