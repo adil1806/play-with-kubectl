@@ -12,15 +12,6 @@ spec:
         labels:
             app: nginxv1
     spec:
-        initContainers:
-          - name: ssl-cert-creation
-            image: frapsoft/openssl
-            command: ["/bin/sh"]
-            args: ["-c","mkdir -p /etc/nginx/ssl;openssl req -newkey rsa:2048 -nodes -keyout /etc/nginx/ssl/nginx.key -x509 -days 365 -out /etc/nginx/ssl/nginx.crt -subj '/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=example.com'"]
-            volumeMounts: 
-            - name: ssl-cert
-              mountPath: /etc/nginx/ssl
-       
         containers:
             - name: first-container
               image: mak1806/k8s-nginx:1
@@ -36,7 +27,8 @@ spec:
         
         volumes:
         - name: ssl-cert
-          emptyDir: {}
+          secret:
+             secretName: nginxsecret
         - name: nginx-files
           configMap:
             name: nginxconfigmap
