@@ -34,7 +34,7 @@ spec:
                    memory: "700Mi"
                  requests:
                    cpu: "100m"
-                   memory: "600Gi"
+                   memory: "600Mi"
               readinessProbe:
                 httpGet:
                   path: /
