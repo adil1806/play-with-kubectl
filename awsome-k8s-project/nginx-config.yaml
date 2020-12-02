@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: nginx-config
 data:
+ default.conf: |
   server {
         listen 80 default_server;
         listen [::]:80 default_server ipv6only=on;
@@ -17,6 +18,7 @@ data:
         ssl_certificate_key /etc/nginx/ssl/tls.key;
 
         location / {
-                try_files $uri $uri/ =404;
+                #autoindex on;
+    try_files $uri /index.html;
         }
   }
