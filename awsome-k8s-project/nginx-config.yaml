@@ -11,7 +11,7 @@ data:
         listen 443 ssl;
 
         root /usr/share/nginx/html;
-        index index22.html;
+        index index.html;
 
         server_name localhost;
         ssl_certificate /etc/nginx/ssl/nginx.crt;
