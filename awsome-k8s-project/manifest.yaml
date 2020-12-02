@@ -23,13 +23,15 @@ spec:
        
         containers:
             - name: first-container
-              image: nginx
+              image: mak1806/k8s-nginx:1
+              command: ["/home/auto-reload-nginx.sh"]
               ports:
+               - containerPort: 443
                - containerPort: 80
               volumeMounts:
               - mountPath: /etc/nginx/ssl
                 name: ssl-cert
-              - mountPath: /etc/nginx/
+              - mountPath: /etc/nginx/conf.d
                 name: nginx-files
         
         volumes:
@@ -38,6 +40,3 @@ spec:
         - name: nginx-files
           configMap:
             name: "nginx-config"
-            items:
-              - key: nginx.conf
-                path: nginx.conf
