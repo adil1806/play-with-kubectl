@@ -39,4 +39,23 @@ spec:
           emptyDir: {}
         - name: nginx-files
           configMap:
-            name: nginxconfigmap
+            name: nginx-config
+            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginxsvc
+  labels:
+    app: nginxv1
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    protocol: TCP
+    name: https
+  selector:
+    app: nginxv1
