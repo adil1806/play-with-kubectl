@@ -13,7 +13,7 @@ spec:
             app: nginxv1
     spec:
         containers:
-            - name: first container
+            - name: first-container
               image: nginx
               ports:
                - containerPort: 80
