@@ -52,9 +52,11 @@ spec:
   type: NodePort
   ports:
   - port: 80
+    nodePort: 32324
     protocol: TCP
     name: http
   - port: 443
+    nodePort: 32325
     protocol: TCP
     name: https
   selector:
