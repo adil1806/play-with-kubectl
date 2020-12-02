@@ -29,12 +29,9 @@ spec:
                - containerPort: 443
                - containerPort: 80
               resources:
-                 limits:
-                   cpu: "150m"
-                   memory: "700Mi"
                  requests:
-                   cpu: "100m"
-                   memory: "600Mi"
+                   cpu: "70m"
+                   memory: "30Mi"
               readinessProbe:
                 httpGet:
                   path: /
