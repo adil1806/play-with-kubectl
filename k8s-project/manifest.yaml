@@ -75,17 +75,22 @@ spec:
             name: nginx-config
             
 ---
-apiVersion: autoscaling.k8s.io/v1
-kind: VerticalPodAutoscaler
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
 metadata:
-  name: my-vpa
+  name: nginx-hpa
 spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind:       Deployment
-    name:       simple-deployment
-  updatePolicy:
-    updateMode: "Auto"
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    name: simple-deployment
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 10
 ---
 apiVersion: v1
 kind: Service
