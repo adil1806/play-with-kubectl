@@ -36,4 +36,4 @@ spec:
               name: postgredb
       volumes:
         - name: postgredb
-          emptyDie: {}
+          emptyDir: {}
