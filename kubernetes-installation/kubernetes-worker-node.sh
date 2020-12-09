@@ -37,6 +37,6 @@ echo "[TASK 5] Installing Tools for K8s"
 apt-get install -y \
         kubelet \
         kubeadm \
-        kubernetes-cni \
-        nfs-common >/dev/null 2>&1
+        kubernetes-cni >/dev/null 2>&1
+       # nfs-common 
 # nfs-common util for nfs dynamic provisioning
