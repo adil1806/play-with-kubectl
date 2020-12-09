@@ -14,4 +14,9 @@ old_ip=$(cat /home/ubuntu/nfs-dynamic/values.yaml | grep "nfs_server" | cut -d '
 echo "Setting IP of Values.yaml"
 sed -i 's/'$old_ip'/'$new_ip'/' /home/ubuntu/nfs-dynamic/values.yaml
 helm upgrade nfs-dynamic /home/ubuntu/nfs-dynamic/.
+sleep 5
+echo "Getting old nfs pod"
+pod=$(kubectl get pods | grep nfs | cut -d ' ' -f1)
+echo "Deleting old pod"
+kubectl delete pods $pod --force
 ```
