@@ -5,6 +5,6 @@ nfs_deploy_name: nfs-client-provisioner
 saName: nfs-client-provisioner
 nfs_deploy_image: quay.io/external_storage/nfs-client-provisioner:latest
 vol_name: nfs-client-root
-nfs_server: 
+nfs_server: 3.20.63.104
 path: /nfs-private
 provisioner: example.com/nfs
