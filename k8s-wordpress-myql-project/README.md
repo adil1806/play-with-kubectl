@@ -127,4 +127,4 @@
       ➜  k8s-manifest git:(master) ls -lh /html
 
   ## Verify by accessing wordpress via. browser
-     <img src="https://github.com/adil1806/play-with-kubectl/blob/master/kubernetes-logo/wordpress-mysql.PNG"  width="100">
+<img src="https://github.com/adil1806/play-with-kubectl/blob/master/kubernetes-logo/wordpress-mysql.PNG"  width="100">
