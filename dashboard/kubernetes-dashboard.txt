@@ -34,6 +34,10 @@ root@master:~/play-with-kubectl/kubernetes# lsof -i tcp:31000
 COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 kube-prox 4786 root   14u  IPv4 636079      0t0  TCP *:31000 (LISTEN)
 
+Creat a SA account as admin role:
+kubectl create -f sa_cluster_admin.yaml
+
+
 Now, to go browser
 using master node ip
 https://<master_ip>:nodeport
@@ -41,6 +45,6 @@ https://<master_ip>:nodeport
 
 This will ask for token:
 Generate token using:
-kubectl -n kube-system describe $(kubectl -n kube-system get secret -n kube-system -o name | grep namespace) | grep token
+ kubectl describe -n kube-system secrets $(kubectl describe sa -n kube-system $(kubectl get sa -n kube-system | grep dashboard | cut -d ' ' -f1) | grep Token | cut -d ':' -f2)
 
 Now, you r done..!!!!!!
