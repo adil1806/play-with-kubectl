@@ -86,14 +86,14 @@
 
   Verify MySQL pod with label "app=wordpress,tier=mysql"
 
-    $  kubectl get pods --selector=app=wordpress,tier=mysql
+    ➜  k8s-manifest git:(master) kubectl get pods --selector=app=wordpress,tier=mysql
 
     NAME                     READY     STATUS    RESTARTS   AGE
     mysql-6d468bfbf7-g7hhh   1/1       Running   1          20m
 
   Verify the MySQL store the data on NFS
 
-    $ ls -lh /mysql
+    ➜  k8s-manifest git:(master) ls -lh /mysql
 
 
   ## Deploy Wordpress with it's service "NodePort", image "mohamedayman/wordpress"
