@@ -4,7 +4,7 @@
 #       system compatible: Ubuntu:18.04.5 LTS (Bionic Beaver) and 20.04.1 LTS (Focal Fossa).     
 #       Maintainer: Adil Abdullah Khan  
 #       To Run this script:
-#       curl  https://raw.githubusercontent.com/adil1806/play-with-kubectl/master/kubernetes-worker-node.sh | bash
+#       curl  https://raw.githubusercontent.com/adil1806/play-with-kubectl/master/kubernetes-installation/kubernetes-worker-node.sh | bash
 #############################################################################################################################################################
 
 #!/bin/bash
