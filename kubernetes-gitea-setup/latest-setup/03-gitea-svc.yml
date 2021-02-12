@@ -10,3 +10,6 @@ spec:
   type: NodePort
   ports:
    - port: 3000 
+     name: http
+   - port: 22
+     name: ssh
