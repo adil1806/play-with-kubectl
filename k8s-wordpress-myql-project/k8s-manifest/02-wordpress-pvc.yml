@@ -5,6 +5,7 @@ metadata:
   labels:
     app: wordpress
 spec:
+  storageClassName: managed-nfs-storage
   accessModes:
     - ReadWriteMany
   resources:

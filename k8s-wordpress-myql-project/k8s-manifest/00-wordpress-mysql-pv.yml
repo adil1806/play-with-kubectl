@@ -10,10 +10,11 @@ metadata:
 spec:
   capacity:
     storage: 1Gi
+  storageClassName: managed-nfs-storage
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 18.218.123.115
+    server: #######
     # Exported path of your NFS server
     path: "/html"
 
@@ -28,9 +29,10 @@ metadata:
 spec:
   capacity:
     storage: 1Gi
+  storageClassName: managed-nfs-storage
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 18.218.123.115
+    server: #######
     # Exported path of your NFS server
     path: "/mysql"
