@@ -24,20 +24,22 @@ TargetPort:        80/TCP
 Endpoints:         10.244.32.16:80
 Session Affinity:  None
 Events:            <none>
-
+```
+##### Access within same namespace
+```
 To test, using other pod located in the default namespace is accessing this service using DNS name mysql.
 ➜  play-with-kubectl git:(master) ✗ k exec -it wordpress-7d97b97c5f-mtkrc -- sh
 # curl -Is nginx
 curl -Is nginx
 HTTP/1.1 200 OK
 ```
-##### Access within same namespace
+
+##### Can't access service nginx located in default namespace in demo namespace
 ```
 In another namspace
 ➜  play-with-kubectl git:(master) ✗ k exec -it -n demo demo-997c454df-88sx7 -- bash
 root@demo-997c454df-88sx7:/# curl -Is nginx
 ```
-##### Can't access service nginx located in default namespace in demo namespace
 
 ##### To Access the nginx service in the default namespace we need to build a service with type ExternalName as shown below. The externalName must point to the namespace which we are trying to access on that namespace.
 ```
