@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: custom-quota
+spec:
+  hard:
+    pods: "8" 
+    services: "7"
+    count/deployments.apps: "6"
+    persistentvolumeclaims: "3"
+    count/replicasets.apps: "6"
+    requests.cpu: "1000m"
+    requests.memory: "1Gi"
+
