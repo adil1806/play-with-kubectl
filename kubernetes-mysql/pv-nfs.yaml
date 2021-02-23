@@ -5,11 +5,11 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: manual
+  storageClassName: managed-nfs-storage 
   capacity:
-    storage: 1Gi
+    storage: 2Gi
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 3.20.66.155
-    path: "/nfs-private/pv1"
+    server: 3.22.94.90
+    path: "/nfs-private"
