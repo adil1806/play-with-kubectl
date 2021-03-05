@@ -6,7 +6,8 @@ metadata:
   labels:
     app: nginx-app
 spec:
-  replicas: 7
+  serviceAccount: test
+  replicas: 1
   minReadySeconds: 5
   strategy:
      rollingUpdate:
@@ -31,5 +32,3 @@ spec:
              value: lko
          ports:
           - containerPort: 80
-     nodeSelector:
-         disktype: ssd
