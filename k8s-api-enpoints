@@ -1,0 +1,6 @@
+k8s api has 3 endpoints: healthz, livez, readyz
+
+** healthz enpoint has deprecated in k8s v1.16 **
+Rest 2 api endpoints:
+curl -k 'httpes://<ip>:6443/livez?verbose'
+curl -k 'httpes://<ip>:6443/readyz?verbose'
