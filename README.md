@@ -3,5 +3,6 @@
 
 [Deliberate exercises for Kubernetes]
 
+[![HitCount](http://hits.dwyl.com/khann-adill/kubernetes-ansible 1 21.svg)](http://hits.dwyl.com/khann-adill/kubernetes-ansible 1 21)
 
 ----
