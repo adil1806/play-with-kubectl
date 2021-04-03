@@ -4,5 +4,6 @@
 [Deliberate exercises for Kubernetes]
 
 [![HitCount](http://hits.dwyl.com/khann-adill/kubernetes-ansible.svg)](http://hits.dwyl.com/khann-adill/kubernetes-ansible)
+[![Inline docs](http://inch-ci.org/github/khann-adill/kubernetes-ansible.svg?branch=master)](http://inch-ci.org/github/khann-adill/kubernetes-ansible)
 
 ----
