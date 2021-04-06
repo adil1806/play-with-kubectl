@@ -1,0 +1,9 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: aws-efs
+provisioner: example.com/aws-efs
+parameters:
+   gidMin: "40000"
+   gidMax: "50000"
+   gidAllocate: "true"
