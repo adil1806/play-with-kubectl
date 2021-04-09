@@ -5,10 +5,10 @@ metadata:
   labels:
     app: nginx-app
   annotations:
-     fluxcd.io/tag.nginx-containers: semver:~1.0
+     fluxcd.io/tag.nginx-containers: semver:~v1.0
      fluxcd.io/automated: "true"
 spec:
-  replicas: 5
+  replicas: 1
   minReadySeconds: 5
   strategy:
      rollingUpdate:
