@@ -1,4 +1,4 @@
-#### ==================== FLUX KUBERNETES (Sync)=============================================
+#### ============================= FLUX KUBERNETES (Sync)=========================================
 
 1. Installing fluxctl:
 ```sh
@@ -44,7 +44,7 @@ Sync log:
 ```sh
 $ kubectl logs -n flux deploy/flux -f
 ```
-#### ==================== FLUX KUBERNETES (Automating)=============================================
+#### ============================ FLUX KUBERNETES (Automating)=====================================
 7. Automating using flux:
 ```sh
 $ fluxctl identity
