@@ -26,6 +26,6 @@ spec:
     spec:
       containers:
       - name: nginx-containers
-        image: mak1806/custom-nginx:1.0.1
+        image: mak1806/custom-nginx:1.0.3
         ports:
         - containerPort: 80
