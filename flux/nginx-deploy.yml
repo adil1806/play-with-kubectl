@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,26 +6,26 @@ metadata:
   labels:
     app: nginx-app
   annotations:
-     fluxcd.io/tag.nginx-containers: semver:~v1.0
-     fluxcd.io/automated: "true"
+    fluxcd.io/tag.nginx-containers: semver:~v1.0
+    fluxcd.io/automated: "true"
 spec:
   replicas: 1
   minReadySeconds: 5
   strategy:
-     rollingUpdate:
-          maxSurge: 0
-          maxUnavailable: 3
-     type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 3
+    type: RollingUpdate
   selector:
     matchLabels:
-       app: nginx-app
+      app: nginx-app
   template:
     metadata:
       labels:
-       app: nginx-app
+        app: nginx-app
     spec:
-     containers:
-       - name: nginx-containers
-         image: mak1806/custom-nginx:v1.0
-         ports:
-          - containerPort: 80
+      containers:
+      - name: nginx-containers
+        image: mak1806/custom-nginx:1.0.1
+        ports:
+        - containerPort: 80
