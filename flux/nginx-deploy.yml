@@ -4,6 +4,9 @@ metadata:
   name: nginx-deploy
   labels:
     app: nginx-app
+  annotations:
+     fluxcd.io/tag.nginx-containers: semver:~1.0
+     fluxcd.io/automated: "true"
 spec:
   replicas: 5
   minReadySeconds: 5
