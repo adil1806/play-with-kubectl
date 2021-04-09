@@ -8,9 +8,6 @@ metadata:
   annotations:
     fluxcd.io/tag.nginx-containers: semver:~1.0
     fluxcd.io/automated: "true"
-    fluxcd.io/locked_msg: 1.0.2 not works
-    fluxcd.io/locked_user: Khan adil <khanabdullahadil@gmail.com>
-    fluxcd.io/locked: 'true'
 spec:
   replicas: 2
   minReadySeconds: 5
@@ -29,6 +26,6 @@ spec:
     spec:
       containers:
       - name: nginx-containers
-        image: mak1806/custom-nginx:1.0.3
+        image: mak1806/custom-nginx:1.0.1
         ports:
         - containerPort: 80
