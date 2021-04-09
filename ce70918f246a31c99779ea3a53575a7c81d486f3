@@ -1,0 +1,1 @@
+{"jobID":"9d56d52e-989c-3b7c-0e21-082ebc9c9621","spec":{"type":"policy","cause":{"Message":"1.0.2 not works","User":"Khan adil \u003ckhanabdullahadil@gmail.com\u003e"},"spec":{"default:deployment/nginx-deploy":{"add":{"locked":"true","locked_msg":"1.0.2 not works","locked_user":"Khan adil \u003ckhanabdullahadil@gmail.com\u003e"},"remove":{}}}},"result":null}
