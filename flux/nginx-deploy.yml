@@ -8,6 +8,9 @@ metadata:
   annotations:
     fluxcd.io/tag.nginx-containers: semver:~1.0
     fluxcd.io/automated: "true"
+    fluxcd.io/locked_msg: 1.0.2 not works
+    fluxcd.io/locked_user: Khan adil <khanabdullahadil@gmail.com>
+    fluxcd.io/locked: 'true'
 spec:
   replicas: 2
   minReadySeconds: 5
