@@ -1,0 +1,22 @@
+version: '3'
+services:
+    mongo:
+      image: mongo:latest
+      container_name: mongo
+      volumes:
+        - mongodb:/data/db
+      ports:
+       - 27017:27017
+    knote-app:
+        depends_on:
+          - mongo
+        build: .
+        container_name: knote-app
+        environment:
+             MONGO_URL: mongodb://mongo:27017/dev
+        ports:
+          - 8080:8080
+        links:
+          - mongo
+volumes:
+    mongodb:
