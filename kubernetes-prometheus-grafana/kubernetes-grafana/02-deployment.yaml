@@ -4,7 +4,7 @@ metadata:
   name: grafana
   namespace: monitoring
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: grafana
@@ -23,10 +23,10 @@ spec:
         resources:
           limits:
             memory: "1Gi"
-            cpu: "1000m"
+            cpu: "700m"
           requests: 
             memory: "1Gi"
-            cpu: "500m"
+            cpu: "300m"
         volumeMounts:
           - mountPath: /var/lib/grafana
             name: grafana-storage
@@ -35,7 +35,8 @@ spec:
             readOnly: false
       volumes:
         - name: grafana-storage
-          emptyDir: {}
+          persistentVolumeClaim:
+               claimName: grafana-storage
         - name: grafana-datasources
           configMap:
               defaultMode: 420

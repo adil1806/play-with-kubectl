@@ -5,7 +5,7 @@ metadata:
   labels:
     app: gitea
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: gitea
@@ -14,7 +14,7 @@ spec:
       labels:
         app: gitea
     spec:
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: 30
       containers:
         - name: gitea
           image: gitea/gitea:1.6.3

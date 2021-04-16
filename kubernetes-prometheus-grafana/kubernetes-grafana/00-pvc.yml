@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: gitea-persistent-storage
+  name: grafana-storage
+  namespace: monitoring
   labels:
-    app: gitea
+    app: grafana 
 spec:
   storageClassName: managed-nfs-storage
   accessModes:

@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: gitea-persistent-storage
+  name: prometheus-storage
+  namespace: monitoring
   labels:
-    app: gitea
+    app: prometheus-server 
 spec:
   storageClassName: managed-nfs-storage
   accessModes:
