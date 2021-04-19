@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: shell-code
+data:
+  api.sh: |
+       CA_CERT=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+       TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+       NAMESPACE=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
+       nodename=$( curl -s --cacert $CA_CERT -H "Authorization: Bearer $TOKEN" "https://kubernetes/api/v1/namespaces/default/pods" | jq -r  '.items[] | select (.metadata."name" == '\"$HOSTNAME\"') | .spec.nodeName' )
+       InternalIp=$( curl -s --cacert $CA_CERT -H "Authorization: Bearer $TOKEN" "https://kubernetes/api/v1/nodes" | jq ' .items[] | select (.metadata.labels."kubernetes.io/hostname" == '\"$nodename\"') | .status.addresses[] | select ( .type == "InternalIP" ) | .address' | sed 's/"//g' )
+       echo "<p>Pod name: $HOSTNAME</p>" > /code/index.html
+       echo "<p>Nodename on which above pod running: $nodename</p>" >> /code/index.html
+       echo "<p>Node Internal IP is: $InternalIp</p>" >> /code/index.html
+

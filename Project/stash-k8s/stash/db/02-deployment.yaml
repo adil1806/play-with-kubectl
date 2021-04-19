@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:10.4
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: bitbucket-postgres
+                key: postgres_db
+          - name: POSTGRES_ADMIN
+            valueFrom:
+              secretKeyRef:
+                name: bitbucket-postgres
+                key: username
+          - name: POSTGRES_PW
+            valueFrom:
+              secretKeyRef:
+                name: bitbucket-postgres
+                key: password
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-volume
+      volumes:
+        - name: postgres-volume
+          persistentVolumeClaim:
+                  claimName: postgress-storage 
