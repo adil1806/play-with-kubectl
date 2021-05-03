@@ -60,8 +60,8 @@ Where, nginx-containers --> container name used in deployments
 ```
 ```yaml
 Current Workload status:
-WORKLOAD                                       CONTAINER          IMAGE                       	              RELEASE  POLICY
-default:deployment/nginx-deploy  nginx-containers  mak1806/custom-nginx:1.0.2 	 ready
+WORKLOAD                                       CONTAINER                    IMAGE                         RELEASE  POLICY
+default:deployment/nginx-deploy             nginx-containers          mak1806/custom-nginx:1.0.2 	          ready
 ```
 
 Image version is: 1.0.2
