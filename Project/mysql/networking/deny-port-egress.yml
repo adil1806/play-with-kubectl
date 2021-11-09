@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: foo-deny-external-egress
+  namespace: mysql
+spec:
+  podSelector:
+   matchLabels:
+     app: mysql
+  policyTypes:
+   - Egress
+  egress:
+   - ports:
+     - port: 8080
+       protocol: TCP
