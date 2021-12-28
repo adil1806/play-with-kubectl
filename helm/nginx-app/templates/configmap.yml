@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+
+metdata:
+    name: {{ .Chart.name }}-config 
+    labels:
+       tag: {{ .Values.image.tag }}
+       env: {{ .Values.env }}
+data:
+   index.html: |
+{{ .Files.Get (printf "env/application-%s.yml" .Values.env)  | indent 6 }}
