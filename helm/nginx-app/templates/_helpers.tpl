@@ -1,14 +1,11 @@
-{{- define "chart" -}}
-{{- print "%s-%s" .Chart.name .Chart.Version }}
+{{- define "my.name" -}}
+{{- printf "%s" .Chart.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "chart.name" -}}
-{{- print "%s" .Chart.name }}
-{{- end }}
-
-{{- define "chart.labels" -}}
-helm.sh/chart: {{ include "chart" . }}
-{{- if .Chart.apiVersion }}
+{{- define "my.labels" -}}
+helm.sh/chart: {{ include "my.name" . }}
+app: {{ .Values.appname }}
+{{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
-
+{{- end }}
