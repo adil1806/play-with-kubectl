@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "my.name" . }}
+  labels:
+    {{- include "my.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  strategy:
+{{- if .Values.deployment.strategy }}
+{{ toYaml .Values.deploymeny.strategy | indent 4 }}
+{{- else }}
+  strategy:
+     type: RollingUpdate
+     rollingUpdate:
+        maxUnavailable: {{ .Values.deployment.rollingStrategy.maxUnavailable }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "my.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "my.labels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: registry-secret
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: nginxport
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          volumeMounts:
+               - name: application-config
+                 mountPath: /usr/share/nginx/html/ 
+          resources:
+             limits:
+                memory: {{ .Values.deployment.memory.limit }}
+             requests:
+                memory: {{ .Values.deployment.memory.request }}
+          livenessProbe:
+{{- if .Values.deployment.livenessProbe }}
+{{ toYaml .Values.deployment.livenessProbe | indent 12  }}
+{{- else }}
+            httpGet:
+             path: {{ .Values.deployment.liveness.httpGet.path }}
+             port: {{ .Values.deployment.liveness.httpGet.port }}
+            initialDelaySeconds: {{ .Values.deployment.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.liveness.periodSeconds }}
+            successThreshold: {{ .Values.deployment.liveness.successThreshold }}
+            failureThreshold: {{ .Values.deployment.liveness.failureThreshold }}
+            timeoutSeconds: {{ .Values.deployment.liveness.timeoutSeconds }}
+ {{- end }}
+          readinessProbe:
+{{- if .Values.deployment.readinessProbe }}
+{{ toYaml .Values.deployment.readinessProbe | indent 12  }}
+{{- else }}
+            httpGet:
+             path: {{ .Values.deployment.readiness.httpGet.path }}
+             port: {{ .Values.deployment.readiness.httpGet.port }}
+            initialDelaySeconds: {{ .Values.deployment.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.readiness.periodSeconds }}
+            successThreshold: {{ .Values.deployment.readiness.successThreshold }}
+            failureThreshold: {{ .Values.deployment.readiness.failureThreshold }}
+            timeoutSeconds: {{ .Values.deployment.readiness.timeoutSeconds }}
+{{- end }}
+      volumes:
+      - name: application-config
+        configMap:
+          name: {{ include "my.name" . }}-config
+          items:
+          - key: "index.html"
+            path: "index.html" 

@@ -1,0 +1,45 @@
+env: dev
+appname: nginxtest
+
+image:
+  pullPolicy: IfNotPresent
+  repository: nginx
+  tag: "latest"
+
+deployment:
+ enables: true
+
+ replicas: 2
+
+ rollingStrategy:
+    maxUnavailable: 50%
+
+ memory:
+   request: 1024Mi
+   limit: 1024Mi
+
+ readiness:
+  httpGet:
+   path: /
+   port: 80
+  iinitialDelaySeconds: 60
+  periodSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+  timeoutSeconds: 10
+
+ liveness:
+  httpGet:
+   path: /
+   port: 80
+  initialDelaySeconds: 60
+  periodSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+  timeoutSeconds: 10
+
+service:
+   enabled: true
+   type: NodePort
+   port: 80
+   nodePort: 32323

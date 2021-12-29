@@ -1,0 +1,19 @@
+{{- if .Values.service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+    name: {{ include "my.name" . }}-svc
+    labels:
+       {{- include "my.labels" . | nindent 6}}
+spec:
+   type: {{ .Values.service.type }}
+   selector:
+      app: {{ .Values.appname }}
+   ports:
+     - port: {{ .Values.service.port }} 
+       protocol: TCP
+       name: nginxi
+       {{ if eq .Values.service.type "NodePort" }}
+       nodePort: {{ .Values.service.nodePort }}
+       {{ end }}
+{{- end }}
