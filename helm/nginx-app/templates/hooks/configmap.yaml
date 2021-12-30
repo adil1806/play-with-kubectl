@@ -5,6 +5,8 @@ metadata:
     labels:
        tag: {{ .Values.image.tag }}
        env: {{ .Values.env }}
+    annotations:
+       "helm.sh/hook": pre-install
 data:
    index.html: |
-{{ .Files.Get (printf "env/application-%s.yml" .Values.env)  | indent 6 }}
+{{ .Files.Get (printf "env/application-%s.html" .Values.env)  | indent 6 }}

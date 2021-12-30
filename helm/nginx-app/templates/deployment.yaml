@@ -30,6 +30,9 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.deployment.workingDir }}
+          workingDir: {{ .Values.deployment.workingDir }}
+          {{- end }}
           ports:
             - name: nginxport
               containerPort: {{ .Values.service.port }}
@@ -37,6 +40,7 @@ spec:
           volumeMounts:
                - name: application-config
                  mountPath: /usr/share/nginx/html/ 
+                 readOnly: true
           resources:
              limits:
                 memory: {{ .Values.deployment.memory.limit }}

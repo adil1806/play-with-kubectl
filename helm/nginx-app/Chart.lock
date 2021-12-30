@@ -1,0 +1,6 @@
+dependencies:
+- name: apache
+  repository: https://charts.bitnami.com/bitnami
+  version: 8.5.2
+digest: sha256:e2f08a8f28b3004acd66601bc612dbea9cfa1ae754df5c93caf4945defff7ee3
+generated: "2021-12-30T07:08:37.611129053Z"
